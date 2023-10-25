@@ -36,5 +36,13 @@ public class Booking {
         return time >= 10 && time <= 18;
     }
     */
-
+    public void removeBooking(ArrayList<Double> bookingList, Booking removeBooking){
+        if (bookingList.contains(removeBooking.time)) {
+            System.out.println("Booking removed for " + removeBooking.name + " on " + removeBooking.date + " at time " + removeBooking.time +" O'Clock.");
+            bookingList.remove(removeBooking.time);
+        }
+        else{
+            System.out.println("No booking found at the selected time.");
+        }
+    }
 }
