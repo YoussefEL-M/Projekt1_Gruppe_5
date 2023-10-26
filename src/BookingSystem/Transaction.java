@@ -1,5 +1,4 @@
 package BookingSystem;
-import java.util.*;
 public class Transaction{
 
     private double amount;
@@ -8,9 +7,11 @@ public class Transaction{
     public void setAmount(double amount){
         this.amount=amount;
     }
-    public boolean setPaymentReceived(boolean paymentReceived){
+    public double getAmount() {
+        return amount;
+    }
+    public void setPaymentReceived(boolean paymentReceived){
         this.paymentReceived = paymentReceived;
-        return paymentReceived;
     }
 
     public String toString(){

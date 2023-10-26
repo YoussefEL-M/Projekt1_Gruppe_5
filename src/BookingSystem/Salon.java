@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
+    private int attendance = 0;
+    private double totalBills = 0;
     private ArrayList<LocalDateTime> bookingList = new ArrayList<>();
 
     public Salon() {
@@ -36,6 +38,8 @@ public class Salon {
             Salon salon = new Salon();
 
             System.out.println("Avaliable Booking List times: " + salon.bookingList);
+
+            String financePassword = "hairyharry";
 
             do {
                 System.out.println("Welcome to Harry's Salon!");
@@ -68,8 +72,10 @@ public class Salon {
                         System.out.println("Minute: ");
                         int minute = scanner.nextInt();
                         LocalTime time = LocalTime.of(hour,minute);
-                        Booking newBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        newBook.createBooking(salon.bookingList);
+
+                        salon.addBooking(name, LocalDate.of(year, month, day), time);
+                        /*Booking newBook = new Booking(name, LocalDate.of(year, month, day), time);
+                        newBook.createBooking(salon.bookingList);*/
                     }
                     case 2 -> {
                         System.out.println("Pleaser enter the following:");
@@ -86,8 +92,11 @@ public class Salon {
                         System.out.println("Minute: ");
                         int minute = scanner.nextInt();
                         LocalTime time = LocalTime.of(hour,minute);
-                        Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        removeBook.removeBooking(salon.bookingList);
+
+                        salon.cancelBooking(name, LocalDate.of(year, month, day), time);
+
+                        /*Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
+                        removeBook.removeBooking(salon.bookingList);*/
 
                     }
                     case 3 -> {
@@ -121,10 +130,17 @@ public class Salon {
                         System.out.println("Transaction saved.");
                     }
                     case 5 -> {
-                        salon.viewTransactions(transactions);
+                        System.out.println("Please enter the password: ");
+                        String enterPassword = scanner.nextLine();
+                        if (enterPassword.equals(financePassword)){
+                            System.out.println("Access granted. Welcome to finance! ");
+                        } else {
+                            System.out.println("Incorrect password. Please try again ");
+                        }
 
                     }
                     case 6 -> {
+                        salon.viewTransactions(transactions);
                     }
                     case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
                     default -> System.out.println("Error. Invalid input. Try again");
@@ -161,6 +177,13 @@ public class Salon {
                 writer.write(transaction.toString());
                 writer.newLine();
             }
+            totalBills = 0;
+            for (Transaction transaction : transactions) {
+                totalBills += transaction.getAmount();
+            }
+            writer.write("Total Bills: " + totalBills+"Attendance: "+attendance);
+            writer.newLine();
+
             writer.close();
             System.out.println("Transactions saved to " + fileName);
         } catch (IOException e) {
@@ -176,6 +199,16 @@ public class Salon {
         for (Transaction transaction : transactions) {
             System.out.println(transaction);
         }
+    }
+    public void addBooking(String name, LocalDate date, LocalTime time) {
+        Booking newBook = new Booking(name, date, time);
+        newBook.createBooking(bookingList);
+        attendance++;
+    }
+    public void cancelBooking(String name, LocalDate date, LocalTime time) {
+        Booking removeBook = new Booking(name, date, time);
+        removeBook.removeBooking(bookingList);
+        attendance--;
     }
 }
 
