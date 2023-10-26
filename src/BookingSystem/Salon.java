@@ -1,10 +1,12 @@
 package BookingSystem;
 
+import java.awt.print.Book;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Salon {
+public class Salon  {
     ArrayList<Double> bookingList;
     int openingTime;
     int closingTime;
@@ -25,16 +27,7 @@ public class Salon {
         Salon salon = new Salon();
         salon.bookingList = bookingList;
 
-        // test
-        Booking a = new Booking("John Jensen", 12.5, LocalDate.now());
-        a.createBooking(salon.bookingList);
-
-
         System.out.println("Avaliable Booking List times: " + salon.bookingList);
-
-        ArrayList<Booking> list=new ArrayList<>();
-        int openingTime;
-        int closingTime;
 
         do {
             System.out.println("Welcome to Harry's Salon!");
@@ -46,15 +39,43 @@ public class Salon {
             System.out.println("4. View services");
             System.out.println("5. View finances");
             System.out.println("6. Exit");
-            System.out.print("Please enter your choice: ");
+            System.out.print("Please enter your choice: \n");
 
             choice = scanner.nextInt();
             scanner.nextLine();
             String message = null;
             switch (choice) {
                 case 1 -> {
+                    System.out.println("Pleaser enter the following:");
+                    System.out.println("Name: ");
+                    String name=scanner.nextLine();
+                    System.out.println("Year: ");
+                    int year = scanner.nextInt();
+                    System.out.println("Month: ");
+                    int month = scanner.nextInt();
+                    System.out.println("Day: ");
+                    int day = scanner.nextInt();
+                    System.out.println("Time: ");
+                    double time = scanner.nextDouble();
+                    Booking newBook= new Booking(name,LocalDate.of(year,month,day), time);
+                    newBook.createBooking(bookingList);
+                    System.out.println(bookingList);
                 }
                 case 2 -> {
+                    message = "Pleaser enter the following:";
+                    System.out.println("Name: ");
+                    String name=scanner.nextLine();
+                    System.out.println("Year: ");
+                    int year = scanner.nextInt();
+                    System.out.println("Month: ");
+                    int month = scanner.nextInt();
+                    System.out.println("Day: ");
+                    int day = scanner.nextInt();
+                    System.out.println("Time: ");
+                    double time = scanner.nextDouble();
+                    Booking removeBook= new Booking(name,LocalDate.of(year,month,day), time);
+                    removeBook.removeBooking(bookingList);
+
                 }
                 case 3 -> {
                 }
@@ -65,15 +86,12 @@ public class Salon {
                 case 6 -> message = "Thanks for using our salon booking system. Goodbye!";
                 default -> message = "Error. Invalid input. Try again";
             }
-            System.out.println(message);
+            System.out.println(bookingList);
         } while (choice != 6);
         scanner.close();
 
     }
 
-    public void Bookings() {
-        bookingList = new ArrayList<>();
-    }
 
     public void printBooking() {
     }

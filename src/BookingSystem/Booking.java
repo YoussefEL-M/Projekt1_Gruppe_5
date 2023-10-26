@@ -9,7 +9,7 @@ public class Booking {
     double time; //skal vi have duration med, eller kører vi med 30min intervaller? Hvis ja, indsæt.
     LocalDate date;
 
-    Booking(String name, double time, LocalDate date){
+    Booking(String name, LocalDate date, double time){
         this.name=name;
         this.time=time;
         this.date=date;
@@ -28,18 +28,13 @@ public class Booking {
             bookingList.remove(time);
         }
         else{
-            System.out.println("The selected time is already booked. Please choose another time.");
+            System.out.println("The selected time is unavailable. Please choose another time.");
         }
     }
-    /* første input, kan slettes.
-    private boolean isValidTime(double time) {
-        return time >= 10 && time <= 18;
-    }
-    */
-    public void removeBooking(ArrayList<Double> bookingList, Booking removeBooking){
-        if (bookingList.contains(removeBooking.time)) {
-            System.out.println("Booking removed for " + removeBooking.name + " on " + removeBooking.date + " at time " + removeBooking.time +" O'Clock.");
-            bookingList.remove(removeBooking.time);
+    public void removeBooking(ArrayList<Double> bookingList){
+        if (!bookingList.contains(time)) {
+            System.out.println("Booking removed for " + name + " on " + date + " at time " + time +" O'Clock.");
+            bookingList.add(time);
         }
         else{
             System.out.println("No booking found at the selected time.");
