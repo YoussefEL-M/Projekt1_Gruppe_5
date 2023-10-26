@@ -60,4 +60,30 @@ public class FileManager {
         file.close();
         secondFile.close();
     } //saveBookings
+
+    static ArrayList<LocalDate> getClosedDays() throws IOException {
+        ArrayList<LocalDate> list = new ArrayList<>();
+        FileReader file = new FileReader("ClosedDays.txt");
+        BufferedReader in = new BufferedReader(file);
+        String line = in.readLine();
+
+        while(line!=null){
+            LocalDate date = LocalDate.parse(line);
+            list.add(date);
+            line = in.readLine();
+        } //while
+        file.close();
+        return list;
+    } //getClosedDays
+
+    static void saveClosedDays(ArrayList<LocalDate> list) throws IOException {
+        FileWriter file = new FileWriter("ClosedDays.txt");
+        PrintWriter out = new PrintWriter(file);
+
+        for(LocalDate d: list){
+            if(!d.isBefore(LocalDate.now()))
+                out.println(d);
+        }
+        file.close();
+    } //saveClosedDays
 } //class

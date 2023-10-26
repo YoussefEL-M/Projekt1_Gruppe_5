@@ -226,6 +226,10 @@ public class Salon {
                 matchingDate.add(b);
         } //for
 
+        System.out.println();
+        System.out.println("Available times for "+searchDate+":");
+        System.out.println();
+
         for(LocalTime t: times){
             check = false;
             for(Booking b: matchingDate){
