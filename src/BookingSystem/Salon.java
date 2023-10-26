@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-    private int attendance = 0;
-    private double totalBills = 0;
     private ArrayList<LocalDateTime> bookingList = new ArrayList<>();
 
     public Salon() {
@@ -39,8 +37,6 @@ public class Salon {
 
             System.out.println("Avaliable Booking List times: " + salon.bookingList);
 
-            String financePassword = "hairyharry";
-
             do {
                 System.out.println("Welcome to Harry's Salon!");
                 System.out.println("Hairy?");
@@ -49,8 +45,8 @@ public class Salon {
                 System.out.println("2. Cancel appointment");
                 System.out.println("3. Add closed date");
                 System.out.println("4. Add and save transaction");
-                System.out.println("5. View finances");
-                System.out.println("6. View services");
+                System.out.println("5. View services");
+                System.out.println("6. View finances");
                 System.out.println("7. Exit");
                 System.out.print("Please enter your choice: \n");
 
@@ -72,10 +68,8 @@ public class Salon {
                         System.out.println("Minute: ");
                         int minute = scanner.nextInt();
                         LocalTime time = LocalTime.of(hour,minute);
-
-                        salon.addBooking(name, LocalDate.of(year, month, day), time);
-                        /*Booking newBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        newBook.createBooking(salon.bookingList);*/
+                        Booking newBook = new Booking(name, LocalDate.of(year, month, day), time);
+                        newBook.createBooking(salon.bookingList);
                     }
                     case 2 -> {
                         System.out.println("Pleaser enter the following:");
@@ -92,11 +86,8 @@ public class Salon {
                         System.out.println("Minute: ");
                         int minute = scanner.nextInt();
                         LocalTime time = LocalTime.of(hour,minute);
-
-                        salon.cancelBooking(name, LocalDate.of(year, month, day), time);
-
-                        /*Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        removeBook.removeBooking(salon.bookingList);*/
+                        Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
+                        removeBook.removeBooking(salon.bookingList);
 
                     }
                     case 3 -> {
@@ -130,20 +121,10 @@ public class Salon {
                         System.out.println("Transaction saved.");
                     }
                     case 5 -> {
-                        System.out.println("Please enter the password: ");
-                        String enterPassword = scanner.nextLine();
-                        int attendance = salon.getAttendance();
-                        if (enterPassword.equals(financePassword)){
-                            System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
-                            salon.viewTransactions(transactions);
-
-                        } else {
-                            System.out.println("Incorrect password. Please try again ");
-                        }
+                        salon.viewTransactions(transactions);
 
                     }
                     case 6 -> {
-
                     }
                     case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
                     default -> System.out.println("Error. Invalid input. Try again");
@@ -158,7 +139,6 @@ public class Salon {
         }
 
         public void addClosedDate(LocalDate closedDate) {
-            LocalDate nextDay = closedDate;
             LocalDateTime startOfDay = LocalDateTime.of(closedDate, LocalTime.of(10, 0));
             LocalDateTime endOfDay = LocalDateTime.of(closedDate, LocalTime.of(18, 0));
 
@@ -177,16 +157,9 @@ public class Salon {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
             for (Transaction transaction : transactions) {
-                writer.write(transaction.toString()+"\n");
+                writer.write(transaction.toString());
                 writer.newLine();
             }
-            totalBills = 0;
-            for (Transaction transaction : transactions) {
-                totalBills += transaction.getAmount();
-            }
-            writer.write("Total Bills: " + totalBills+" Attendance: "+attendance+"\n");
-            writer.newLine();
-
             writer.close();
             System.out.println("Transactions saved to " + fileName);
         } catch (IOException e) {
@@ -203,51 +176,6 @@ public class Salon {
             System.out.println(transaction);
         }
     }
-    public void addBooking(String name, LocalDate date, LocalTime time) {
-        Booking newBook = new Booking(name, date, time);
-        newBook.createBooking(bookingList);
-        attendance++;
-    }
-    public void cancelBooking(String name, LocalDate date, LocalTime time) {
-        Booking removeBook = new Booking(name, date, time);
-        removeBook.removeBooking(bookingList);
-        attendance--;
-    }
-    public int getAttendance() {
-        return attendance;
-    }
-
-    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
-        if(searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){
-            System.out.println();
-            System.out.println("Error: The salon is not open for business on this day.");
-        }
-        else {
-            ArrayList<Booking> matchingDate = new ArrayList<>();
-            boolean check = false;
-
-            for (Booking b : list) {
-                if (b.date.isEqual(searchDate))
-                    matchingDate.add(b);
-            } //for
-
-            System.out.println();
-            System.out.println("Available times for " + searchDate + ":");
-            System.out.println();
-
-            for (LocalTime t : times) {
-                check = false;
-                for (Booking b : matchingDate) {
-                    if (b.time.equals(t)) {
-                        check = true;
-                        break;
-                    }
-                } //for
-                if (!check)
-                    System.out.println(t);
-            } //for
-        }
-    } //searchBookings
 }
 
 
