@@ -1,16 +1,40 @@
 package BookingSystem;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-    ArrayList<Booking> bookingList;
+    ArrayList<Double> bookingList;
     int openingTime;
     int closingTime;
 
+    public Salon() {
+        this.bookingList = new ArrayList<>();
+
+    }
+
     public static void main(String[] args) {
+        ArrayList<Double> bookingList = new ArrayList<>();
+        for (double hour = 10; hour < 18; hour++) {
+            bookingList.add(hour);
+            bookingList.add(hour + 0.5); // Add 30 minutes
+        }
         Scanner scanner = new Scanner(System.in);
         int choice;
+        Salon salon = new Salon();
+        salon.bookingList = bookingList;
+
+        // test
+        Booking a = new Booking("John Jensen", 12.5, LocalDate.now());
+        a.createBooking(salon.bookingList);
+
+
+        System.out.println("Avaliable Booking List times: " + salon.bookingList);
+
+        ArrayList<Booking> list=new ArrayList<>();
+        int openingTime;
+        int closingTime;
 
         do {
             System.out.println("Welcome to Harry's Salon!");
@@ -62,4 +86,6 @@ public class Salon {
     public void closing(int closingTime) {
         this.closingTime = closingTime;
     }
+
+
 }
