@@ -238,7 +238,7 @@ public class Salon {
                     break;
                 }
             } //for
-            if(check)
+            if(!check)
                 System.out.println(t);
         } //for
     } //searchBookings
