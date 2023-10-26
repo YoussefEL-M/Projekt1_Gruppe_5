@@ -216,6 +216,28 @@ public class Salon {
     public int getAttendance() {
         return attendance;
     }
+
+    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times){ //Severin - 26/10
+        ArrayList<Booking> matchingDate = new ArrayList<>();
+        boolean check = false;
+
+        for(Booking b:list){
+            if(b.date.isEqual(searchDate))
+                matchingDate.add(b);
+        } //for
+
+        for(LocalTime t: times){
+            check = false;
+            for(Booking b: matchingDate){
+                if(b.time.equals(t)) {
+                    check = true;
+                    break;
+                }
+            } //for
+            if(check)
+                System.out.println(t);
+        } //for
+    } //searchBookings
 }
 
 
