@@ -13,17 +13,21 @@ import java.util.Scanner;
 public class Salon {
     private int attendance = 0;
     private double totalBills = 0;
-    private ArrayList<LocalDateTime> bookingList = new ArrayList<>();
+    private ArrayList<LocalTime> availableTimes = new ArrayList<>();
+    private ArrayList<LocalDate> closedDates = new ArrayList<>();
 
     public Salon() {
+        // Initialize available times (10am-6pm in 30 min intervals)
+        for (int hour = 10; hour < 18; hour++) {
+            availableTimes.add(LocalTime.of(hour, 0));
+            availableTimes.add(LocalTime.of(hour, 30));
+        }
+        // Initialize closed dates (e.g., weekends)
         LocalDate today = LocalDate.now();
         LocalDate threeMonthsLater = today.plusMonths(3);
-        while (today.isBefore(threeMonthsLater)) {
-            if (today.getDayOfWeek() != DayOfWeek.SATURDAY && today.getDayOfWeek() != DayOfWeek.SUNDAY) {
-                for (int hour = 10; hour < 18; hour++) {
-                    bookingList.add(LocalDateTime.of(today, LocalTime.of(hour, 0)));
-                    bookingList.add(LocalDateTime.of(today, LocalTime.of(hour, 30)));
-                }
+        while (today.isBefore(threeMonthsLater)){
+            if (today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY){
+                closedDates.add(today);
             }
             today = today.plusDays(1);
         }
@@ -37,7 +41,10 @@ public class Salon {
         int choice;
         Salon salon = new Salon();
 
-        System.out.println("Avaliable Booking List times: " + salon.bookingList);
+        // Only for tests.
+        System.out.println("Avaliable Booking List times: " + salon.availableTimes);
+        System.out.println("Avaliable Booking List closeddates: " + salon.closedDates);
+        // end test
 
         String financePassword = "hairyharry";
 
@@ -148,7 +155,7 @@ public class Salon {
                 case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
                 default -> System.out.println("Error. Invalid input. Try again");
             }
-            System.out.println(salon.bookingList);
+            System.out.println(salon.availableTimes);
         } while (choice != 7);
         scanner.close();
 
@@ -157,14 +164,15 @@ public class Salon {
     public void printBooking () {
     }
 
+    // skal rettes!
     public void addClosedDate(LocalDate closedDate) {
         LocalDateTime startOfDay = LocalDateTime.of(closedDate, LocalTime.of(10, 0));
         LocalDateTime endOfDay = LocalDateTime.of(closedDate, LocalTime.of(18, 0));
 
         while (startOfDay.isBefore(endOfDay)) {
-            if (bookingList.contains(startOfDay)) {
+            if (availableTimes.contains(startOfDay)) {
                 System.out.println("Removing time on closed date: " + startOfDay);
-                bookingList.remove(startOfDay);
+                availableTimes.remove(startOfDay);
             }
             startOfDay = startOfDay.plusMinutes(30);
         }
@@ -203,17 +211,26 @@ public class Salon {
         }
     }
     public void addBooking(String name, LocalDate date, LocalTime time) {
-        Booking newBook = new Booking(name, date, time);
-        newBook.createBooking(bookingList);
-        attendance++;
+        if (isAvailable(date, time)) {
+            Booking newBook = new Booking(name, date, time);
+            newBook.createBooking(availableTimes);
+            attendance++;
+        }else{
+            System.out.println("Booking not available on this date or time.");
+        }
     }
     public void cancelBooking(String name, LocalDate date, LocalTime time) {
-        Booking removeBook = new Booking(name, date, time);
-        removeBook.removeBooking(bookingList);
-        attendance--;
+        if (!isAvailable(date, time)) {
+            Booking removeBook = new Booking(name, date, time);
+            removeBook.removeBooking(availableTimes);
+            attendance--;
+        }
     }
     public int getAttendance() {
         return attendance;
+    }
+    private boolean isAvailable(LocalDate date, LocalTime time) {
+        return !closedDates.contains(date) && availableTimes.contains(time);
     }
 
     void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
