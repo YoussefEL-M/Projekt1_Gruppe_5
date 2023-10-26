@@ -49,4 +49,8 @@ public class Booking {
         }
     }
 
+    public String toString(){
+        return name+" "+date+" "+time;
+    }
+
 }
