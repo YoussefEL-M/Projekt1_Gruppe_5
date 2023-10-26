@@ -1,5 +1,8 @@
 package BookingSystem;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,6 +28,9 @@ public class Salon {
     }
 
         public static void main (String[] args){
+            ArrayList<Transaction> transactions = new ArrayList<>();
+            Salon salonT = new Salon();
+            salonT.saveTransactions(transactions, "transactions.txt");
             Scanner scanner = new Scanner(System.in);
             int choice;
             Salon salon = new Salon();
@@ -38,7 +44,7 @@ public class Salon {
                 System.out.println("1. Book appointment");
                 System.out.println("2. Cancel appointment");
                 System.out.println("3. Add closed date");
-                System.out.println("4. Add product");
+                System.out.println("4. Add and save transaction");
                 System.out.println("5. View services");
                 System.out.println("6. View finances");
                 System.out.println("7. Exit");
@@ -46,7 +52,6 @@ public class Salon {
 
                 choice = scanner.nextInt();
                 scanner.nextLine();
-                String message = null;
                 switch (choice) {
                     case 1 -> {
                         System.out.println("Pleaser enter the following:");
@@ -67,7 +72,7 @@ public class Salon {
                         newBook.createBooking(salon.bookingList);
                     }
                     case 2 -> {
-                        message = "Pleaser enter the following:";
+                        System.out.println("Pleaser enter the following:");
                         System.out.println("Name: ");
                         String name = scanner.nextLine();
                         System.out.println("Year: ");
@@ -97,13 +102,32 @@ public class Salon {
                         salon.addClosedDate(closedDate);
                     }
                     case 4 -> {
+                        System.out.println("Enter transaction details:");
+                        System.out.print("Amount: ");
+                        double amount = scanner.nextDouble();
+                        scanner.nextLine();  // Consume the newline character
+
+                        System.out.print("Was payment received? (yes/no): ");
+                        String paymentReceivedInput = scanner.nextLine();
+                        boolean paymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
+
+                        Transaction newTransaction = new Transaction();
+                        newTransaction.setAmount(amount);
+                        newTransaction.setPaymentReceived(paymentReceived);
+
+                        transactions.add(newTransaction);
+
+                        salon.saveTransactions(transactions, "transactions.txt");
+                        System.out.println("Transaction saved.");
                     }
                     case 5 -> {
+                        salon.viewTransactions(transactions);
+
                     }
                     case 6 -> {
                     }
-                    case 7 -> message = "Thanks for using our salon booking system. Goodbye!";
-                    default -> message = "Error. Invalid input. Try again";
+                    case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
+                    default -> System.out.println("Error. Invalid input. Try again");
                 }
                 System.out.println(salon.bookingList);
             } while (choice != 7);
@@ -129,6 +153,30 @@ public class Salon {
             System.out.println("Adding closed date: " + closedDate);
 
         }
+    public void saveTransactions(ArrayList<Transaction> transactions, String fileName) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+
+            for (Transaction transaction : transactions) {
+                writer.write(transaction.toString());
+                writer.newLine();
+            }
+            writer.close();
+            System.out.println("Transactions saved to " + fileName);
+        } catch (IOException e) {
+            System.err.println("Error saving transactions: " + e.getMessage());
+        }
+    }
+    public void viewTransactions(ArrayList<Transaction> transactions) {
+        if (transactions.isEmpty()) {
+            System.out.println("No transactions available.");
+            return;
+        }
+        System.out.println("Transactions:");
+        for (Transaction transaction : transactions) {
+            System.out.println(transaction);
+        }
+    }
 }
 
 

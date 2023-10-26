@@ -1,7 +1,7 @@
 package BookingSystem;
 import java.util.*;
 public class Transaction{
-    
+
     private double amount;
     private boolean paymentReceived = false;
 
@@ -22,4 +22,5 @@ public class Transaction{
         }
         return "Amount: " + amount + ", Payment: " + status;
     }
+
 }
