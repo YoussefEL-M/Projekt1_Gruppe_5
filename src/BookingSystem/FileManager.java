@@ -1,4 +1,4 @@
-//Project1_Group_5 - Severin
+//Project1_Group_5 DAT23B
 
 package BookingSystem;
 
@@ -13,7 +13,7 @@ public class FileManager {
         for(Booking b: list){
             System.out.println(b);
         }
-        list.add(new Booking("Amber Golley",LocalDate.parse("2016-06-14"),LocalTime.parse("12:00:00")));
+        list.add(new Booking("Please Be Happy",LocalDate.parse("2023-11-21"),LocalTime.parse("22:42:00")));
         saveBookings(list);
     }
 

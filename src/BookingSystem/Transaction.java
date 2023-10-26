@@ -1,3 +1,5 @@
+//Project1_Group_5 DAT23B
+
 package BookingSystem;
 public class Transaction{
 
@@ -19,7 +21,7 @@ public class Transaction{
         if (paymentReceived) {
             status = "Received";
         } else {
-            status = "Not Received, costumer owes: "+amount;
+            status = "Not Received, customer owes: "+amount;
         }
         return "Amount: " + amount + ", Payment: " + status;
     }
