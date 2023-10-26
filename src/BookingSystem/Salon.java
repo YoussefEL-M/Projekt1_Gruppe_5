@@ -1,183 +1,118 @@
 package BookingSystem;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.awt.print.Book;
 import java.io.IOException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Salon {
-    private ArrayList<LocalDateTime> bookingList = new ArrayList<>();
+public class Salon  {
+    ArrayList<Double> bookingList;
+    int openingTime;
+    int closingTime;
 
     public Salon() {
-        LocalDate today = LocalDate.now();
-        LocalDate threeMonthsLater = today.plusMonths(3);
-        while (today.isBefore(threeMonthsLater)) {
-            if (today.getDayOfWeek() != DayOfWeek.SATURDAY && today.getDayOfWeek() != DayOfWeek.SUNDAY) {
-                for (int hour = 10; hour < 18; hour++) {
-                    bookingList.add(LocalDateTime.of(today, LocalTime.of(hour, 0)));
-                    bookingList.add(LocalDateTime.of(today, LocalTime.of(hour, 30)));
-                }
-            }
-            today = today.plusDays(1);
-        }
+        this.bookingList = new ArrayList<>();
+
     }
 
-        public static void main (String[] args){
-            ArrayList<Transaction> transactions = new ArrayList<>();
-            Salon salonT = new Salon();
-            salonT.saveTransactions(transactions, "transactions.txt");
-            Scanner scanner = new Scanner(System.in);
-            int choice;
-            Salon salon = new Salon();
+    public static void main(String[] args) {
+        ArrayList<Double> bookingList = new ArrayList<>();
+        for (double hour = 10; hour < 18; hour++) {
+            bookingList.add(hour);
+            bookingList.add(hour + 0.5); // Add 30 minutes
+        }
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        Salon salon = new Salon();
+        salon.bookingList = bookingList;
 
-            System.out.println("Avaliable Booking List times: " + salon.bookingList);
+        System.out.println("Avaliable Booking List times: " + salon.bookingList);
 
-            do {
-                System.out.println("Welcome to Harry's Salon!");
-                System.out.println("Hairy?");
-                System.out.println("See Cotter!");
-                System.out.println("1. Book appointment");
-                System.out.println("2. Cancel appointment");
-                System.out.println("3. Add closed date");
-                System.out.println("4. Add and save transaction");
-                System.out.println("5. View services");
-                System.out.println("6. View finances");
-                System.out.println("7. Exit");
-                System.out.print("Please enter your choice: \n");
+        String financePassword = "hairyharry";
 
-                choice = scanner.nextInt();
-                scanner.nextLine();
-                switch (choice) {
-                    case 1 -> {
-                        System.out.println("Pleaser enter the following:");
-                        System.out.println("Name: ");
-                        String name = scanner.nextLine();
-                        System.out.println("Year: ");
-                        int year = scanner.nextInt();
-                        System.out.println("Month: ");
-                        int month = scanner.nextInt();
-                        System.out.println("Day: ");
-                        int day = scanner.nextInt();
-                        System.out.println("Hour: ");
-                        int hour = scanner.nextInt();
-                        System.out.println("Minute: ");
-                        int minute = scanner.nextInt();
-                        LocalTime time = LocalTime.of(hour,minute);
-                        Booking newBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        newBook.createBooking(salon.bookingList);
-                    }
-                    case 2 -> {
-                        System.out.println("Pleaser enter the following:");
-                        System.out.println("Name: ");
-                        String name = scanner.nextLine();
-                        System.out.println("Year: ");
-                        int year = scanner.nextInt();
-                        System.out.println("Month: ");
-                        int month = scanner.nextInt();
-                        System.out.println("Day: ");
-                        int day = scanner.nextInt();
-                        System.out.println("Hour: ");
-                        int hour = scanner.nextInt();
-                        System.out.println("Minute: ");
-                        int minute = scanner.nextInt();
-                        LocalTime time = LocalTime.of(hour,minute);
-                        Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        removeBook.removeBooking(salon.bookingList);
+        do {
+            System.out.println("Welcome to Harry's Salon!");
+            System.out.println("Hairy?");
+            System.out.println("See Cotter!");
+            System.out.println("1. Book appointment");
+            System.out.println("2. Cancel appointment");
+            System.out.println("3. Add product");
+            System.out.println("4. View services");
+            System.out.println("5. View finances");
+            System.out.println("6. Exit");
+            System.out.print("Please enter your choice: \n");
 
-                    }
-                    case 3 -> {
-                        System.out.println("Enter closed date:");
-                        System.out.println("Year: ");
-                        int closedYear = scanner.nextInt();
-                        System.out.println("Month: ");
-                        int closedMonth = scanner.nextInt();
-                        System.out.println("Day: ");
-                        int closedDay = scanner.nextInt();
-                        LocalDate closedDate = LocalDate.of(closedYear, closedMonth, closedDay);
-                        salon.addClosedDate(closedDate);
-                    }
-                    case 4 -> {
-                        System.out.println("Enter transaction details:");
-                        System.out.print("Amount: ");
-                        double amount = scanner.nextDouble();
-                        scanner.nextLine();  // Consume the newline character
-
-                        System.out.print("Was payment received? (yes/no): ");
-                        String paymentReceivedInput = scanner.nextLine();
-                        boolean paymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
-
-                        Transaction newTransaction = new Transaction();
-                        newTransaction.setAmount(amount);
-                        newTransaction.setPaymentReceived(paymentReceived);
-
-                        transactions.add(newTransaction);
-
-                        salon.saveTransactions(transactions, "transactions.txt");
-                        System.out.println("Transaction saved.");
-                    }
-                    case 5 -> {
-                        salon.viewTransactions(transactions);
-
-                    }
-                    case 6 -> {
-                    }
-                    case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
-                    default -> System.out.println("Error. Invalid input. Try again");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            String message = null;
+            switch (choice) {
+                case 1 -> {
+                    System.out.println("Pleaser enter the following:");
+                    System.out.println("Name: ");
+                    String name=scanner.nextLine();
+                    System.out.println("Year: ");
+                    int year = scanner.nextInt();
+                    System.out.println("Month: ");
+                    int month = scanner.nextInt();
+                    System.out.println("Day: ");
+                    int day = scanner.nextInt();
+                    System.out.println("Time: ");
+                    double time = scanner.nextDouble();
+                    Booking newBook= new Booking(name,LocalDate.of(year,month,day), time);
+                    newBook.createBooking(bookingList);
+                    System.out.println(bookingList);
                 }
-                System.out.println(salon.bookingList);
-            } while (choice != 7);
-            scanner.close();
+                case 2 -> {
+                    message = "Pleaser enter the following:";
+                    System.out.println("Name: ");
+                    String name=scanner.nextLine();
+                    System.out.println("Year: ");
+                    int year = scanner.nextInt();
+                    System.out.println("Month: ");
+                    int month = scanner.nextInt();
+                    System.out.println("Day: ");
+                    int day = scanner.nextInt();
+                    System.out.println("Time: ");
+                    double time = scanner.nextDouble();
+                    Booking removeBook= new Booking(name,LocalDate.of(year,month,day), time);
+                    removeBook.removeBooking(bookingList);
 
-        }
-
-        public void printBooking () {
-        }
-
-        public void addClosedDate(LocalDate closedDate) {
-            LocalDate nextDay = closedDate;
-            LocalDateTime startOfDay = LocalDateTime.of(closedDate, LocalTime.of(10, 0));
-            LocalDateTime endOfDay = LocalDateTime.of(closedDate, LocalTime.of(18, 0));
-
-            while (startOfDay.isBefore(endOfDay)) {
-                if (bookingList.contains(startOfDay)) {
-                    System.out.println("Removing time on closed date: " + startOfDay);
-                    bookingList.remove(startOfDay);
                 }
-                startOfDay = startOfDay.plusMinutes(30);
+                case 3 -> {
+                }
+                case 4 -> {
+                }
+                case 5 -> {
+                    System.out.println("Please enter the password: ");
+                    String enterPassword = scanner.nextLine();
+                    if (enterPassword.equals(financePassword)){
+                        System.out.println("Access granted. Welcome to finance! ");
+                    } else {
+                        System.out.println("Incorrect password. Please try again ");
+                    }
+                }
+                case 6 -> message = "Thanks for using our salon booking system. Goodbye!";
+                default -> message = "Error. Invalid input. Try again";
             }
-            System.out.println("Adding closed date: " + closedDate);
+            System.out.println(bookingList);
+        } while (choice != 6);
+        scanner.close();
 
-        }
-    public void saveTransactions(ArrayList<Transaction> transactions, String fileName) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+    }
 
-            for (Transaction transaction : transactions) {
-                writer.write(transaction.toString());
-                writer.newLine();
-            }
-            writer.close();
-            System.out.println("Transactions saved to " + fileName);
-        } catch (IOException e) {
-            System.err.println("Error saving transactions: " + e.getMessage());
-        }
+
+    public void printBooking() {
     }
-    public void viewTransactions(ArrayList<Transaction> transactions) {
-        if (transactions.isEmpty()) {
-            System.out.println("No transactions available.");
-            return;
-        }
-        System.out.println("Transactions:");
-        for (Transaction transaction : transactions) {
-            System.out.println(transaction);
-        }
+
+    public void opening(int openingTime) {
+        this.openingTime = openingTime;
+
     }
+
+    public void closing(int closingTime) {
+        this.closingTime = closingTime;
+    }
+
+
 }
-
-
-
