@@ -52,7 +52,6 @@ public class Salon {
 
                 choice = scanner.nextInt();
                 scanner.nextLine();
-                String message = null;
                 switch (choice) {
                     case 1 -> {
                         System.out.println("Pleaser enter the following:");
@@ -73,7 +72,7 @@ public class Salon {
                         newBook.createBooking(salon.bookingList);
                     }
                     case 2 -> {
-                        message = "Pleaser enter the following:";
+                        System.out.println("Pleaser enter the following:");
                         System.out.println("Name: ");
                         String name = scanner.nextLine();
                         System.out.println("Year: ");
@@ -123,11 +122,12 @@ public class Salon {
                     }
                     case 5 -> {
                         salon.viewTransactions(transactions);
+
                     }
                     case 6 -> {
                     }
-                    case 7 -> message = "Thanks for using our salon booking system. Goodbye!";
-                    default -> message = "Error. Invalid input. Try again";
+                    case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
+                    default -> System.out.println("Error. Invalid input. Try again");
                 }
                 System.out.println(salon.bookingList);
             } while (choice != 7);
