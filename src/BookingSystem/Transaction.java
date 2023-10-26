@@ -20,6 +20,6 @@ public class Transaction{
         } else {
             status = "Not Received";
         }
-        return "Booking: 1"  + ", Amount: " + amount + ", Payment: " + status;
+        return "Amount: " + amount + ", Payment: " + status;
     }
 }
