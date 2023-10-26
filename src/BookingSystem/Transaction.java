@@ -23,7 +23,4 @@ public class Transaction{
         return "Amount: " + amount + ", Payment: " + status;
     }
 
-    public String toSaveString() {
-        return amount+","+(paymentReceived?"1":"0");
-    }
 }
