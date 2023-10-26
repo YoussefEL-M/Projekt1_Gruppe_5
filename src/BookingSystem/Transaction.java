@@ -19,7 +19,7 @@ public class Transaction{
         if (paymentReceived) {
             status = "Received";
         } else {
-            status = "Not Received";
+            status = "Not Received, costumer owes: "+amount;
         }
         return "Amount: " + amount + ", Payment: " + status;
     }

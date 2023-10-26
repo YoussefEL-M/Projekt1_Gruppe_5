@@ -49,8 +49,8 @@ public class Salon {
                 System.out.println("2. Cancel appointment");
                 System.out.println("3. Add closed date");
                 System.out.println("4. Add and save transaction");
-                System.out.println("5. View services");
-                System.out.println("6. View finances");
+                System.out.println("5. View finances");
+                System.out.println("6. View services");
                 System.out.println("7. Exit");
                 System.out.print("Please enter your choice: \n");
 
@@ -132,15 +132,18 @@ public class Salon {
                     case 5 -> {
                         System.out.println("Please enter the password: ");
                         String enterPassword = scanner.nextLine();
+                        int attendance = salon.getAttendance();
                         if (enterPassword.equals(financePassword)){
-                            System.out.println("Access granted. Welcome to finance! ");
+                            System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
+                            salon.viewTransactions(transactions);
+
                         } else {
                             System.out.println("Incorrect password. Please try again ");
                         }
 
                     }
                     case 6 -> {
-                        salon.viewTransactions(transactions);
+
                     }
                     case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
                     default -> System.out.println("Error. Invalid input. Try again");
@@ -174,14 +177,14 @@ public class Salon {
             BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
             for (Transaction transaction : transactions) {
-                writer.write(transaction.toString());
+                writer.write(transaction.toString()+"\n");
                 writer.newLine();
             }
             totalBills = 0;
             for (Transaction transaction : transactions) {
                 totalBills += transaction.getAmount();
             }
-            writer.write("Total Bills: " + totalBills+"Attendance: "+attendance);
+            writer.write("Total Bills: " + totalBills+" Attendance: "+attendance+"\n");
             writer.newLine();
 
             writer.close();
@@ -209,6 +212,9 @@ public class Salon {
         Booking removeBook = new Booking(name, date, time);
         removeBook.removeBooking(bookingList);
         attendance--;
+    }
+    public int getAttendance() {
+        return attendance;
     }
 }
 
