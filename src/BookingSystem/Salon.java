@@ -217,30 +217,36 @@ public class Salon {
         return attendance;
     }
 
-    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times){ //Severin - 26/10
-        ArrayList<Booking> matchingDate = new ArrayList<>();
-        boolean check = false;
+    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
+        if(searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){
+            System.out.println();
+            System.out.println("Error: The salon is not open for business on this day.");
+        }
+        else {
+            ArrayList<Booking> matchingDate = new ArrayList<>();
+            boolean check = false;
 
-        for(Booking b:list){
-            if(b.date.isEqual(searchDate))
-                matchingDate.add(b);
-        } //for
-
-        System.out.println();
-        System.out.println("Available times for "+searchDate+":");
-        System.out.println();
-
-        for(LocalTime t: times){
-            check = false;
-            for(Booking b: matchingDate){
-                if(b.time.equals(t)) {
-                    check = true;
-                    break;
-                }
+            for (Booking b : list) {
+                if (b.date.isEqual(searchDate))
+                    matchingDate.add(b);
             } //for
-            if(!check)
-                System.out.println(t);
-        } //for
+
+            System.out.println();
+            System.out.println("Available times for " + searchDate + ":");
+            System.out.println();
+
+            for (LocalTime t : times) {
+                check = false;
+                for (Booking b : matchingDate) {
+                    if (b.time.equals(t)) {
+                        check = true;
+                        break;
+                    }
+                } //for
+                if (!check)
+                    System.out.println(t);
+            } //for
+        }
     } //searchBookings
 }
 
