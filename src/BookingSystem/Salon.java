@@ -35,6 +35,8 @@ public class Salon {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = new ArrayList<>();
 
+        ArrayList<Transaction> transactions = new ArrayList<>();
+        salonT.saveTransactions(transactions, "transactions.txt");
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -115,38 +117,22 @@ public class Salon {
                     salon.addClosedDate(closedDate);
                 }
                 case 4 -> {
-                    System.out.println("Enter booking details:");
-                    System.out.print("Name: ");
-                    String name = scanner.nextLine();
-
-                    System.out.print("Note: ");
-                    String note = scanner.nextLine();
-
-                    System.out.print("Year: ");
-                    int year = scanner.nextInt();
-                    System.out.print("Month: ");
-                    int month = scanner.nextInt();
-                    System.out.print("Day: ");
-                    int day = scanner.nextInt();
-                    System.out.print("Hour: ");
-                    int hour = scanner.nextInt();
-                    System.out.print("Minute: ");
-                    int minute = scanner.nextInt();
-
-                    LocalTime time = LocalTime.of(hour, minute);
-                    LocalDate date = LocalDate.of(year, month, day);
-
+                    System.out.println("Enter transaction details:");
                     System.out.print("Amount: ");
                     double amount = scanner.nextDouble();
-                    scanner.nextLine();
+                    scanner.nextLine();  // Consume the newline character
 
                     System.out.print("Was payment received? (yes/no): ");
                     String paymentReceivedInput = scanner.nextLine();
                     boolean paymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
-                    Booking newBookingT = new Booking(name, note, date, time, amount, paymentReceived);
+                    Transaction newTransaction = new Transaction();
+                    newTransaction.setAmount(amount);
+                    newTransaction.setPaymentReceived(paymentReceived);
 
-                    System.out.println(newBookingT);
+                    transactions.add(newTransaction);
+
+                    salon.saveTransactions(transactions, "transactions.txt");
                     System.out.println("Transaction saved.");
                 }
                 case 5 -> {
@@ -155,8 +141,7 @@ public class Salon {
                     int attendance = salon.getAttendance();
                     if (enterPassword.equals(financePassword)){
                         System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
-
-                        System.out.println(transactions);
+                        salon.viewTransactions(transactions);
 
                     } else {
                         System.out.println("Incorrect password. Please try again ");
@@ -193,6 +178,27 @@ public class Salon {
         System.out.println("Adding closed date: " + closedDate);
 
     }
+    public void saveTransactions(ArrayList<Transaction> transactions, String fileName) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+
+            for (Transaction transaction : transactions) {
+                writer.write(transaction.toString()+"\n");
+                writer.newLine();
+            }
+            totalBills = 0;
+            for (Transaction transaction : transactions) {
+                totalBills += transaction.getAmount();
+            }
+            writer.write("Total Bills: " + totalBills+" Attendance: "+attendance+"\n");
+            writer.newLine();
+
+            writer.close();
+            System.out.println("Transactions saved to " + fileName);
+        } catch (IOException e) {
+            System.err.println("Error saving transactions: " + e.getMessage());
+        }
+    }
     public void viewTransactions(ArrayList<Transaction> transactions) {
         if (transactions.isEmpty()) {
             System.out.println("No transactions available.");
@@ -211,7 +217,7 @@ public class Salon {
         }else{
             System.out.println("Booking not available on this date or time.");
         }
-    }
+    }*/
     public void cancelBooking(String name, LocalDate date, LocalTime time) {
         if (!isAvailable(date, time)) {
             Booking removeBook = new Booking(name, date, time);
@@ -219,9 +225,12 @@ public class Salon {
             attendance--;
         }
     }
+    public int getAttendance() {
+        return attendance;
+    }
     private boolean isAvailable(LocalDate date, LocalTime time) {
         return !closedDates.contains(date) && availableTimes.contains(time);
-    }*/
+    }
 
     void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
         if(searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){
