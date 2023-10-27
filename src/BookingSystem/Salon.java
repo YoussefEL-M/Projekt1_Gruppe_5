@@ -166,7 +166,7 @@ public class Salon {
                 case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
                 default -> System.out.println("Error. Invalid input. Try again");
             }
-            System.out.println(salon.availableTimes);
+            System.out.println(availableTimes);
         } while (choice != 7);
         scanner.close();
 
