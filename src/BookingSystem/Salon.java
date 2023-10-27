@@ -13,28 +13,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-    //
-    public Salon() {
-        // Initialize available times (10am-6pm in 30 min intervals)
+    public static void main (String[] args){
+        ArrayList<LocalTime> availableTimes = new ArrayList<>();
+        ArrayList<LocalDate> closedDates = new ArrayList<>();
         for (int hour = 10; hour < 18; hour++) {
             availableTimes.add(LocalTime.of(hour, 0));
             availableTimes.add(LocalTime.of(hour, 30));
         }
-        // Initialize closed dates (e.g., weekends)
-        LocalDate today = LocalDate.now();
-        LocalDate threeMonthsLater = today.plusMonths(3);
-        while (today.isBefore(threeMonthsLater)){
-            if (today.getDayOfWeek() == DayOfWeek.SATURDAY || today.getDayOfWeek() == DayOfWeek.SUNDAY){
-                closedDates.add(today);
-            }
-            today = today.plusDays(1);
-        }
-    }
-
-    public static void main (String[] args){
-        ArrayList<LocalTime> availableTimes = new ArrayList<>();
-        ArrayList<LocalDate> closedDates = new ArrayList<>();
-
         Scanner scanner = new Scanner(System.in);
         int choice;
 
@@ -96,8 +81,11 @@ public class Salon {
                     System.out.println("Minute: ");
                     int minute = scanner.nextInt();
                     LocalTime time = LocalTime.of(hour,minute);
-
-                    salon.cancelBooking(name, LocalDate.of(year, month, day), time);
+                    LocalDate date = LocalDate.of(year,month,day);
+                    if (isAvailable(date,time,closedDates,availableTimes,bookings)){
+                        bookings.add(new Booking(name,note,date,time,amount,paymentReceived));
+                        System.out.println("Booking created for " + name + " on " + date + " at time " + time + " O'Clock.");
+                    }
 
                         /*Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
                         removeBook.removeBooking(salon.bookingList);*/
