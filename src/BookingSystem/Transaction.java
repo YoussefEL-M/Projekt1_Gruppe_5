@@ -20,6 +20,9 @@ public class Transaction{
     public void setPaymentReceived(boolean paymentReceived){
         this.paymentReceived = paymentReceived;
     }
+    public boolean getPaymentReceived(){
+        return this.paymentReceived;
+    }
 
     public String toString(){
         String status;

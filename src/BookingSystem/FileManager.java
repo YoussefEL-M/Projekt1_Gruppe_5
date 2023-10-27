@@ -13,7 +13,7 @@ public class FileManager {
         for(Booking b: list){
             System.out.println(b);
         }
-        list.add(new Booking("Please Be Happy",LocalDate.parse("2023-11-21"),LocalTime.parse("22:42:00")));
+        //list.add(new Booking()));
         saveBookings(list);
     }
 
@@ -27,10 +27,13 @@ public class FileManager {
         while(line!=null){
             String[] bits = line.split(",");
             String name = bits[0];
-            LocalDate date = LocalDate.parse(bits[1]);
-            LocalTime time = LocalTime.parse(bits[2]);
+            String note = bits[1];
+            LocalDate date = LocalDate.parse(bits[2]);
+            LocalTime time = LocalTime.parse(bits[3]);
+            double amount = Double.parseDouble(bits[4]);
+            boolean paymentReceived = Boolean.getBoolean(bits[5]);
 
-            list.add(new Booking(name,date,time));
+            list.add(new Booking(name,note,date,time,amount,paymentReceived));
             line = in.readLine();
         } //while
         file.close();
@@ -46,15 +49,15 @@ public class FileManager {
         PrintWriter secondOut = new PrintWriter(secondFile);
 
         for(Booking b: secondList){
-            secondOut.println(b.name+","+b.date+","+b.time);
+            secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
         }
 
         for(Booking b: list){
             if(b.date.isBefore(LocalDate.now())){
-                secondOut.println(b.name+","+b.date+","+b.time);
+                secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
             }
             else{
-                out.println(b.name+","+b.date+","+b.time);
+                out.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
             }
         } //for
         file.close();
