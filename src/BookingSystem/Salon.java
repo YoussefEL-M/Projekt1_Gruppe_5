@@ -93,14 +93,11 @@ public class Salon {
                     int minute = scanner.nextInt();
                     LocalTime time = LocalTime.of(hour,minute);
                     LocalDate date = LocalDate.of(year,month,day);
-                    if (isAvailable(date,time,closedDates,availableTimes,bookings)){
-                        bookings.add(new Booking(name,note,date,time,amount,paymentReceived));
+                    /* skal opdateres
+                    if (!isAvailable(date,time,closedDates,availableTimes,bookings)){
+                        bookings.remove(new Booking(name,note,date,time,amount,paymentReceived));
                         System.out.println("Booking created for " + name + " on " + date + " at time " + time + " O'Clock.");
-                    }
-
-                        /*Booking removeBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        removeBook.removeBooking(salon.bookingList);*/
-
+                    }*/
                 }
                 case 3 -> {
                     System.out.println("Enter closed date:");
