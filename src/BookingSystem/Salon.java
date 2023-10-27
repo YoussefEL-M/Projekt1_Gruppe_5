@@ -18,6 +18,8 @@ public class Salon {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = new ArrayList<>();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
+        ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
+
         for (int hour = 10; hour < 18; hour++) {
             availableTimes.add(LocalTime.of(hour, 0));
             availableTimes.add(LocalTime.of(hour, 30));
@@ -149,11 +151,11 @@ public class Salon {
                 case 5 -> {
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
-                    int attendance = salon.getAttendance();
+                    // indsæt mulighed for index print
                     if (enterPassword.equals(financePassword)){
                         System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
 
-                        System.out.println(transactions);
+                        System.out.println(pastBookings);
 
                     } else {
                         System.out.println("Incorrect password. Please try again ");
