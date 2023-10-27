@@ -64,8 +64,9 @@ public class Salon {
                     int hour = scanner.nextInt();
                     System.out.println("Minute: ");
                     int minute = scanner.nextInt();
+                    scanner.nextLine();
                     System.out.println("Enter note: ");
-                    String note = scanner.next();
+                    String note = scanner.nextLine();
                     LocalDate date = LocalDate.of(year, month, day);
                     int amount = 0;
                     boolean paymentReceived = false;
@@ -165,9 +166,12 @@ public class Salon {
                 case 6 -> {
 
                 }
-                case 7 -> System.out.println("Thanks for using our salon booking system. Goodbye!");
+                case 7 -> {
+                    FileManager.saveBookings(bookings);
+                    System.out.println("Thanks for using our salon booking system. Goodbye!");
+                }
                 default -> System.out.println("Error. Invalid input. Try again");
-            }
+            } //switch
             System.out.println(availableTimes);
         } while (choice != 7);
         scanner.close();
@@ -232,7 +236,7 @@ public class Salon {
     }
 
     return !closedDates.contains(date) && availableTimes.contains(time);
-}
+    }  //isAvailable
 
     void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
         if(searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){

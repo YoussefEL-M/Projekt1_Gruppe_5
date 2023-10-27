@@ -17,52 +17,52 @@ public class FileManager {
         saveBookings(list);
     }
 
-    static ArrayList<Booking> getBookings(String fileName) {
+    static ArrayList<Booking> getBookings(String fileName) throws IOException {
         ArrayList<Booking> list = new ArrayList<>();
 
-        try (BufferedReader in = new BufferedReader((new FileReader(fileName + ".txt")))) {
-            String line = in.readLine();
+        FileReader file = new FileReader(fileName+".txt");
+        BufferedReader in = new BufferedReader(file);
+        String line = in.readLine();
 
-            while (line != null) {
-                String[] bits = line.split(",");
-                String name = bits[0];
-                String note = bits[1];
-                LocalDate date = LocalDate.parse(bits[2]);
-                LocalTime time = LocalTime.parse(bits[3]);
-                double amount = Double.parseDouble(bits[4]);
-                boolean paymentReceived = Boolean.parseBoolean(bits[5]);
+        while(line!=null){
+            String[] bits = line.split(",");
+            String name = bits[0];
+            String note = bits[1];
+            LocalDate date = LocalDate.parse(bits[2]);
+            LocalTime time = LocalTime.parse(bits[3]);
+            double amount = Double.parseDouble(bits[4]);
+            boolean paymentReceived = Boolean.getBoolean(bits[5]);
 
-                list.add(new Booking(name, note, date, time, amount, paymentReceived));
-                line = in.readLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+            list.add(new Booking(name,note,date,time,amount,paymentReceived));
+            line = in.readLine();
+        } //while
+        file.close();
         return list;
     } //getBookings
 
     static void saveBookings(ArrayList<Booking> list) throws IOException {
-        try (PrintWriter out = new PrintWriter(new FileWriter("Bookings.txt"));
-             PrintWriter secondOut = new PrintWriter(new FileWriter("PastBookings.txt"))) {
+        ArrayList<Booking> secondList = getBookings("PastBookings");
 
-            ArrayList<Booking> secondList = getBookings("PastBookings");
+        FileWriter file = new FileWriter("Bookings.txt");
+        FileWriter secondFile = new FileWriter("PastBookings.txt");
+        PrintWriter out = new PrintWriter(file);
+        PrintWriter secondOut = new PrintWriter(secondFile);
 
-            for (Booking b : secondList) {
-                secondOut.println(b.name + "," + b.note + "," + b.date + "," + b.time + "," + b.transaction.getAmount() + "," + b.transaction.getPaymentReceived());
-            }
-
-            for (Booking b : list) {
-                if (b.date.isBefore(LocalDate.now())) {
-                    secondOut.println(b.name + "," + b.note + "," + b.date + "," + b.time + "," + b.transaction.getAmount() + "," + b.transaction.getPaymentReceived());
-                } else {
-                    out.println(b.name + "," + b.note + "," + b.date + "," + b.time + "," + b.transaction.getAmount() + "," + b.transaction.getPaymentReceived());
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        for(Booking b: secondList){
+            secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
         }
-    }
+
+        for(Booking b: list){
+            if(b.date.isBefore(LocalDate.now())){
+                secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+            }
+            else{
+                out.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+            }
+        } //for
+        file.close();
+        secondFile.close();
+    } //saveBookings
 
     static ArrayList<LocalDate> getClosedDays() {
         ArrayList<LocalDate> list = new ArrayList<>();
