@@ -76,7 +76,7 @@ public class FileManager {
                 line = in.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
 
         return list;
@@ -89,7 +89,7 @@ public class FileManager {
                     out.println(d);
             }
         } catch (IOException e) {
-            e.printStackTrace(); // Handle the exception properly (log it, show a message, etc.)
+            e.printStackTrace();
         }
     } //saveClosedDays
 } //class
