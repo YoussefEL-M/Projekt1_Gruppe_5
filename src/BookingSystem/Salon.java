@@ -153,7 +153,7 @@ public class Salon {
                     String enterPassword = scanner.nextLine();
                     // indsæt mulighed for index print
                     if (enterPassword.equals(financePassword)){
-                        System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
+                        //System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
 
                         System.out.println(pastBookings);
 
