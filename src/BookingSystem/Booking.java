@@ -30,7 +30,7 @@ public class Booking {
         return indexNo+". "+name+" - "+date+" "+time+" - "+note;
     }
 
-    public void createBooking(ArrayList<LocalTime> bookingList){
+    public static void createBooking(ArrayList<LocalTime> bookingList){
         LocalTime selectedTime = time;
         if (bookingList.contains(selectedTime)) {
             System.out.println("Booking created for " + name + " on " + date + " at time " + time + " O'Clock.");
@@ -54,5 +54,11 @@ public class Booking {
             System.out.println("No booking found at the selected time.");
         }
     }
+    public LocalDate getDate() {
+        return date;
+    }
 
+    public LocalTime getTime() {
+        return time;
+    }
 }
