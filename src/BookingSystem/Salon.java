@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-//
+
     public Salon() {
         // Initialize available times (10am-6pm in 30 min intervals)
         for (int hour = 10; hour < 18; hour++) {
