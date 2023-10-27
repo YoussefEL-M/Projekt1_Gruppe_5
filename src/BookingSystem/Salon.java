@@ -34,7 +34,6 @@ public class Salon {
     public static void main (String[] args){
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = new ArrayList<>();
-        ArrayList<Transaction> transactions = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -116,21 +115,38 @@ public class Salon {
                     salon.addClosedDate(closedDate);
                 }
                 case 4 -> {
-                    System.out.println("Enter transaction details:");
+                    System.out.println("Enter booking details:");
+                    System.out.print("Name: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("Note: ");
+                    String note = scanner.nextLine();
+
+                    System.out.print("Year: ");
+                    int year = scanner.nextInt();
+                    System.out.print("Month: ");
+                    int month = scanner.nextInt();
+                    System.out.print("Day: ");
+                    int day = scanner.nextInt();
+                    System.out.print("Hour: ");
+                    int hour = scanner.nextInt();
+                    System.out.print("Minute: ");
+                    int minute = scanner.nextInt();
+
+                    LocalTime time = LocalTime.of(hour, minute);
+                    LocalDate date = LocalDate.of(year, month, day);
+
                     System.out.print("Amount: ");
                     double amount = scanner.nextDouble();
-                    scanner.nextLine();  // Consume the newline character
+                    scanner.nextLine();
 
                     System.out.print("Was payment received? (yes/no): ");
                     String paymentReceivedInput = scanner.nextLine();
                     boolean paymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
-                    Transaction newTransaction = new Transaction(0,false);
-                    newTransaction.setAmount(amount);
-                    newTransaction.setPaymentReceived(paymentReceived);
+                    Booking newBookingT = new Booking(name, note, date, time, amount, paymentReceived);
 
-                    transactions.add(newTransaction);
-
+                    System.out.println(newBookingT);
                     System.out.println("Transaction saved.");
                 }
                 case 5 -> {
