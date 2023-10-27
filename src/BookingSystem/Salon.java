@@ -108,7 +108,8 @@ public class Salon {
                     System.out.println("Day: ");
                     int closedDay = scanner.nextInt();
                     LocalDate closedDate = LocalDate.of(closedYear, closedMonth, closedDay);
-                    salon.addClosedDate(closedDate);
+                    closedDates.add(closedDate);
+                    System.out.println("Closed date added: " + closedDate);
                 }
                 case 4 -> {
                     System.out.println("Enter booking details:");
