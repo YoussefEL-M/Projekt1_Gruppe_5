@@ -28,7 +28,7 @@ public class Salon {
         // Only for tests.
         System.out.println("Avaliable Booking List times: " + availableTimes);
         System.out.println("Avaliable Booking List closeddates: " + closedDates);
-        // end test
+        // end of test
 
         String financePassword = "hairyharry";
 
