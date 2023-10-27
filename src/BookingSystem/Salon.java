@@ -13,10 +13,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-    private int attendance = 0;
-    private double totalBills = 0;
-    private ArrayList<LocalTime> availableTimes = new ArrayList<>();
-    private ArrayList<LocalDate> closedDates = new ArrayList<>();
 
     public Salon() {
         // Initialize available times (10am-6pm in 30 min intervals)
@@ -36,12 +32,13 @@ public class Salon {
     }
 
     public static void main (String[] args){
+        ArrayList<LocalTime> availableTimes = new ArrayList<>();
+        ArrayList<LocalDate> closedDates = new ArrayList<>();
+
         ArrayList<Transaction> transactions = new ArrayList<>();
-        Salon salonT = new Salon();
         salonT.saveTransactions(transactions, "transactions.txt");
         Scanner scanner = new Scanner(System.in);
         int choice;
-        Salon salon = new Salon();
 
         // Only for tests.
         System.out.println("Avaliable Booking List times: " + salon.availableTimes);
@@ -212,7 +209,7 @@ public class Salon {
             System.out.println(transaction);
         }
     }
-    public void addBooking(String name, LocalDate date, LocalTime time) {
+    /*public void addBooking(String name, LocalDate date, LocalTime time) {
         if (isAvailable(date, time)) {
             Booking newBook = new Booking(name, date, time);
             newBook.createBooking(availableTimes);
@@ -220,7 +217,7 @@ public class Salon {
         }else{
             System.out.println("Booking not available on this date or time.");
         }
-    }
+    }*/
     public void cancelBooking(String name, LocalDate date, LocalTime time) {
         if (!isAvailable(date, time)) {
             Booking removeBook = new Booking(name, date, time);

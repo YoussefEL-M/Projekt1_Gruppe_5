@@ -7,14 +7,27 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Booking {
+     static int noOfBookings = 0;
+     int indexNo;
     String name;
-    LocalTime time; //skal vi have duration med, eller kører vi med 30min intervaller? Hvis ja, indsæt.
+    String note;
+    LocalTime time;
     LocalDate date;
+    Transaction transaction = new Transaction(0,false);
 
-    Booking(String name, LocalDate date, LocalTime time){
+    Booking(String name, String note, LocalDate date, LocalTime time, double amount, boolean paymentReceived){
+        indexNo = noOfBookings;
+        noOfBookings++;
         this.name = name;
+        this.note = note;
         this.time = time;
         this.date = date;
+        transaction.setAmount(amount);
+        transaction.setPaymentReceived(paymentReceived);
+    }
+
+    public String toString(){
+        return indexNo+". "+name+" - "+date+" "+time+" - "+note;
     }
 
     public void createBooking(ArrayList<LocalTime> bookingList){

@@ -6,6 +6,11 @@ public class Transaction{
     private double amount;
     private boolean paymentReceived = false;
 
+    public Transaction(double amount, boolean paymentReceived){
+        this.amount = amount;
+        this.paymentReceived = paymentReceived;
+    }
+
     public void setAmount(double amount){
         this.amount=amount;
     }
