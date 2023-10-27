@@ -18,7 +18,7 @@ public class Salon {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = new ArrayList<>();
         ArrayList<Booking> bookings = new ArrayList<>();
-
+//
         for (int hour = 10; hour < 18; hour++) {
             availableTimes.add(LocalTime.of(hour, 0));
             availableTimes.add(LocalTime.of(hour, 30));
