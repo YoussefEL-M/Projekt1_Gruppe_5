@@ -5,6 +5,7 @@ package BookingSystem;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -13,9 +14,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-    public static void main (String[] args){
+    public static void main (String[] args) throws IOException{
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = new ArrayList<>();
+        ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
         for (int hour = 10; hour < 18; hour++) {
             availableTimes.add(LocalTime.of(hour, 0));
             availableTimes.add(LocalTime.of(hour, 30));
@@ -24,8 +26,8 @@ public class Salon {
         int choice;
 
         // Only for tests.
-        System.out.println("Avaliable Booking List times: " + salon.availableTimes);
-        System.out.println("Avaliable Booking List closeddates: " + salon.closedDates);
+        System.out.println("Avaliable Booking List times: " + availableTimes);
+        System.out.println("Avaliable Booking List closeddates: " + closedDates);
         // end test
 
         String financePassword = "hairyharry";
@@ -60,11 +62,20 @@ public class Salon {
                     int hour = scanner.nextInt();
                     System.out.println("Minute: ");
                     int minute = scanner.nextInt();
+                    System.out.println("Enter note: ");
+                    String note = scanner.next();
+                    LocalDate date = LocalDate.of(year, month, day);
+                    int amount = 0;
+                    boolean paymentReceived = false;
                     LocalTime time = LocalTime.of(hour,minute);
-
-                    salon.addBooking(name, LocalDate.of(year, month, day), time);
-                        /*Booking newBook = new Booking(name, LocalDate.of(year, month, day), time);
-                        newBook.createBooking(salon.bookingList);*/
+                    if (isAvailable(date,time,closedDates,availableTimes,bookings)) {
+                        Booking newBook = new Booking(name, note, date, time, amount, paymentReceived);
+                        bookings.add(newBook);
+                        System.out.println("Booking created for " + name + " on " + date + " at time " + time + " O'Clock.");
+                    }
+                    else {
+                        System.out.println("The selected time is unavailable. Please choose another time.");
+                    }
                 }
                 case 2 -> {
                     System.out.println("Pleaser enter the following:");
@@ -166,7 +177,7 @@ public class Salon {
     public void printBooking () {
     }
 
-    // skal rettes!
+    /* skal rettes!
     public void addClosedDate(LocalDate closedDate) {
         LocalDateTime startOfDay = LocalDateTime.of(closedDate, LocalTime.of(10, 0));
         LocalDateTime endOfDay = LocalDateTime.of(closedDate, LocalTime.of(18, 0));
@@ -180,7 +191,7 @@ public class Salon {
         }
         System.out.println("Adding closed date: " + closedDate);
 
-    }
+    }*/
     public void viewTransactions(ArrayList<Transaction> transactions) {
         if (transactions.isEmpty()) {
             System.out.println("No transactions available.");
@@ -206,10 +217,22 @@ public class Salon {
             removeBook.removeBooking(availableTimes);
             attendance--;
         }
-    }
-    private boolean isAvailable(LocalDate date, LocalTime time) {
-        return !closedDates.contains(date) && availableTimes.contains(time);
     }*/
+    private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
+    if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+        // It's Saturday or Sunday
+        return false;
+    }
+
+    for (Booking booking : bookings) {
+        if (booking.getDate().equals(date) && booking.getTime().equals(time)) {
+            // Booking already exists
+            return false;
+        }
+    }
+
+    return !closedDates.contains(date) && availableTimes.contains(time);
+}
 
     void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
         if(searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){

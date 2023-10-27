@@ -30,15 +30,6 @@ public class Booking {
         return indexNo+". "+name+" - "+date+" "+time+" - "+note;
     }
 
-    public static void createBooking(ArrayList<LocalTime> bookingList){
-        LocalTime selectedTime = time;
-        if (bookingList.contains(selectedTime)) {
-            System.out.println("Booking created for " + name + " on " + date + " at time " + time + " O'Clock.");
-            bookingList.remove(selectedTime);
-        } else {
-            System.out.println("The selected time is unavailable. Please choose another time.");
-        }
-    }
     public void removeBooking(ArrayList<LocalTime> bookingList){
         LocalTime selectedTime = time;
         if (!bookingList.contains(selectedTime)) {
