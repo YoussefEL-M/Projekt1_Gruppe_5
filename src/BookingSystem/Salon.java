@@ -224,4 +224,19 @@ public class Salon {
             } //for
         } //else
     }//searchBookings
+
+    static void showBookings(ArrayList<Booking> list,ArrayList<LocalDate> closedDates, LocalDate date){
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(date)) {
+            System.out.println();
+            System.out.println("Error: The salon is not open for business on this day.");
+        }
+        else{
+            list.sort(null);
+            System.out.println();
+            for(Booking b: list){
+                if (b.date.isEqual(date))
+                    System.out.println(b);
+            }
+        }
+    }
 }
