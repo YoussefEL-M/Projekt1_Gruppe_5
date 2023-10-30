@@ -238,35 +238,43 @@ public class Salon {
     return !closedDates.contains(date) && availableTimes.contains(time);
     }  //isAvailable
 
-    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates){ //Severin - 26/10
-        if(searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){
+    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
+        if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
             System.out.println();
             System.out.println("Error: The salon is not open for business on this day.");
-        }
-        else {
-            ArrayList<Booking> matchingDate = new ArrayList<>();
-            boolean check = false;
+        } else {
+            for (int i = 1; i <= 5;) {
+                if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){
+                    searchDate = searchDate.plusDays(1);
+                    continue;
+                }
 
-            for (Booking b : list) {
-                if (b.date.isEqual(searchDate))
-                    matchingDate.add(b);
-            } //for
+                ArrayList<Booking> matchingDate = new ArrayList<>();
+                boolean check = false;
 
-            System.out.println();
-            System.out.println("Available times for " + searchDate + ":");
-            System.out.println();
-
-            for (LocalTime t : times) {
-                check = false;
-                for (Booking b : matchingDate) {
-                    if (b.time.equals(t)) {
-                        check = true;
-                        break;
-                    }
+                for (Booking b : list) {
+                    if (b.date.isEqual(searchDate))
+                        matchingDate.add(b);
                 } //for
-                if (!check)
-                    System.out.println(t);
+
+                System.out.println();
+                System.out.println("Available times for " + searchDate + ":");
+                System.out.println();
+
+                for (LocalTime t : times) {
+                    check = false;
+                    for (Booking b : matchingDate) {
+                        if (b.time.equals(t)) {
+                            check = true;
+                            break;
+                        }
+                    } //for
+                    if (!check)
+                        System.out.println(t);
+                } //for
+                searchDate = searchDate.plusDays(1);
+                i++;
             } //for
-        }
-    } //searchBookings
+        } //else
+    }//searchBookings
 }
