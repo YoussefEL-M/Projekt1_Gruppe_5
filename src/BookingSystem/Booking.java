@@ -52,4 +52,7 @@ public class Booking {
     public LocalTime getTime() {
         return time;
     }
+    public String getName(){
+        return name;
+    }
 }
