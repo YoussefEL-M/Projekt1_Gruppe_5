@@ -23,6 +23,9 @@ public class Transaction{
     public boolean getPaymentReceived(){
         return this.paymentReceived;
     }
+    public void addAmount(double amount){
+        this.amount = this.amount+amount;
+    }
 
     public String toString(){
         String status;
