@@ -55,4 +55,7 @@ public class Booking implements Comparable<Booking>{
     public LocalTime getTime() {
         return time;
     }
+    public String getName(){
+        return name;
+    }
 }

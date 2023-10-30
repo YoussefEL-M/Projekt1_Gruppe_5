@@ -42,7 +42,7 @@ public class Salon {
             System.out.println("1. Book appointment");
             System.out.println("2. Cancel appointment");
             System.out.println("3. Add closed date");
-            System.out.println("4. Add and save transaction");
+            System.out.println("4. Edit booking transactions");
             System.out.println("5. View finances");
             System.out.println("6. View services");
             System.out.println("7. Exit");
@@ -80,25 +80,12 @@ public class Salon {
                     System.out.println("Enter closed date in format yyyy-mm-dd.");
                     LocalDate closedDate = LocalDate.parse(sc.nextLine());
                     closedDates.add(closedDate);
+                    FileManager.saveClosedDays(closedDates);
                     System.out.println("Closed date added: " + closedDate);
                 }
                 case 4 -> {
-                    Booking newBook = getBookingDetails(scanner);
+                    editBooking(bookings, closedDates, availableTimes, scanner);
 
-                    System.out.print("Amount: ");
-                    double amount = scanner.nextDouble();
-                    scanner.nextLine();
-
-                    System.out.print("Was payment received? (yes/no): ");
-                    String paymentReceivedInput = scanner.nextLine();
-                    boolean paymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
-
-                    Booking newBookingT = new Booking(newBook.name, newBook.note, newBook.getDate(), newBook.getTime(), amount, paymentReceived);
-
-                    System.out.println(newBookingT);
-                    System.out.println("Transaction saved.");
-
-                    bookings.add(newBookingT);
                 }
                 case 5 -> {
                     System.out.println("Please enter the password: ");
@@ -132,7 +119,7 @@ public class Salon {
     private static Booking getBookingDetails(Scanner scanner) {
         boolean details = true;
 
-        while(details) {
+        while (details) {
             try {
                 System.out.println("Pleaser enter the following:");
                 System.out.println("Name: ");
@@ -163,26 +150,26 @@ public class Salon {
     }
 
     private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
-    if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-        // It's Saturday or Sunday
-        System.out.println();
-        System.out.println("Error: date is on a weekend.");
-        return false;
-    }
-
-    for (Booking booking : bookings) {
-        if (booking.getDate().equals(date) && booking.getTime().equals(time)) {
-            // Booking already exists
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
+            // It's Saturday or Sunday
             System.out.println();
-            System.out.println("Error: a booking already exists at this time.");
+            System.out.println("Error: date is on a weekend.");
             return false;
         }
-    }
-    if(!closedDates.contains(date)){
-        System.out.println();
-        System.out.println("Error: the salon is closed on this day.");
-    }
-    return !closedDates.contains(date) && availableTimes.contains(time);
+
+        for (Booking booking : bookings) {
+            if (booking.getDate().equals(date) && booking.getTime().equals(time)) {
+                // Booking already exists
+                System.out.println();
+                System.out.println("Error: a booking already exists at this time.");
+                return false;
+            }
+        }
+        if (!closedDates.contains(date)) {
+            System.out.println();
+            System.out.println("Error: the salon is closed on this day.");
+        }
+        return !closedDates.contains(date) && availableTimes.contains(time);
     }  //isAvailable
 
     static void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
@@ -190,8 +177,8 @@ public class Salon {
             System.out.println();
             System.out.println("Error: The salon is not open for business on this day.");
         } else {
-            for (int i = 1; i <= 5;) {
-                if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)){
+            for (int i = 1; i <= 5; ) {
+                if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
                     searchDate = searchDate.plusDays(1);
                     continue;
                 }
@@ -225,17 +212,57 @@ public class Salon {
         } //else
     }//searchBookings
 
-    static void showBookings(ArrayList<Booking> list,ArrayList<LocalDate> closedDates, LocalDate date){
-        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(date)) {
-            System.out.println();
-            System.out.println("Error: The salon is not open for business on this day.");
-        }
-        else{
-            list.sort(null);
-            System.out.println();
-            for(Booking b: list){
-                if (b.date.isEqual(date))
-                    System.out.println(b);
+    private static void editBooking(ArrayList<Booking> bookings, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, Scanner scanner) {
+        boolean t = true;
+
+        while (t) {
+            try {
+                System.out.println("Enter the name of the booking you want to edit: ");
+                String searchName = scanner.nextLine();
+
+                System.out.println("Enter the date of the booking in format yyyy-mm-dd: ");
+                LocalDate searchDate = LocalDate.parse(scanner.nextLine());
+
+                System.out.println("Enter the time of the booking in format hh:mm: ");
+                LocalTime searchTime = LocalTime.parse(scanner.nextLine());
+
+                Booking bookingToEdit = null;
+
+                for (Booking booking : bookings) {
+                    if (booking.getName().equals(searchName) && booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
+                        bookingToEdit = booking;
+                        break;
+                    }
+                }
+
+                if (bookingToEdit != null) {
+                    System.out.println("Current booking details:");
+                    System.out.println(bookingToEdit);
+
+                    System.out.println("Enter the new amount: ");
+                    double newAmount = scanner.nextDouble();
+                    scanner.nextLine();
+
+                    System.out.println("Was payment received? (yes/no): ");
+                    String paymentReceivedInput = scanner.nextLine();
+                    boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
+
+                    bookingToEdit.transaction.addAmount(newAmount);
+                    bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
+
+                    System.out.println("Booking edited successfully!");
+                    t=false;
+                    FileManager.saveBookings(bookings);
+                } else {
+                    System.out.println("No matching booking found.");
+                }
+            }catch (DateTimeParseException e) {
+                System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd.");
+                t = true;
+            } catch (Exception e) {
+                System.out.println("And error has occured " + e.getMessage());
+                e.printStackTrace();
+                t = true;
             }
         }
     }
