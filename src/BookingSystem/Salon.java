@@ -87,7 +87,7 @@ public class Salon {
                     }
 
                 }
-                case 7 -> {
+                case 6 -> {
                     FileManager.saveBookings(bookings);
                     System.out.println("Thanks for using our salon booking system. Goodbye!");
                 }
@@ -96,7 +96,6 @@ public class Salon {
             System.out.println(availableTimes);
         } while (choice != 6);
         scanner.close();
-
     }
 
     private static Booking getBookingDetails(Scanner scanner) {
