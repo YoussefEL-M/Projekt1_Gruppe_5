@@ -167,7 +167,7 @@ public class Salon {
     return !closedDates.contains(date) && availableTimes.contains(time);
     }  //isAvailable
 
-    void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
+    static void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
         if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
             System.out.println();
             System.out.println("Error: The salon is not open for business on this day.");
