@@ -80,6 +80,7 @@ public class Salon {
                     System.out.println("Enter closed date in format yyyy-mm-dd.");
                     LocalDate closedDate = LocalDate.parse(sc.nextLine());
                     closedDates.add(closedDate);
+                    FileManager.saveClosedDays(closedDates);
                     System.out.println("Closed date added: " + closedDate);
                 }
                 case 4 -> {
