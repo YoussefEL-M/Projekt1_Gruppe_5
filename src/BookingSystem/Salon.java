@@ -28,11 +28,6 @@ public class Salon {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
-        // Only for tests.
-        System.out.println("Avaliable Booking List times: " + availableTimes);
-        System.out.println("Avaliable Booking List closed dates: " + closedDates);
-        // end of test
-
         String financePassword = "hairyharry";
 
         do {
@@ -78,7 +73,6 @@ public class Salon {
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
                     if (enterPassword.equals(financePassword)) {
-                        //System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
 
                         System.out.println(pastBookings);
 
