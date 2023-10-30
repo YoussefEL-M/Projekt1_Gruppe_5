@@ -2,20 +2,20 @@
 
 package BookingSystem;
 
+import jdk.jshell.spi.ExecutionControlProvider;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Array;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class Salon {
-    public static void main (String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = new ArrayList<>();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
@@ -67,8 +67,7 @@ public class Salon {
                     for (Booking booking : bookings) {
                         if (booking.getDate().equals(newBook.getDate()) && booking.getTime().equals(newBook.getTime())) {
                             bookings.remove(newBook);
-                        }
-                        else System.out.println("Booking doesn't exist.");
+                        } else System.out.println("Booking doesn't exist.");
                     }
                     /* skal opdateres
                     if (!isAvailable(date,time,closedDates,availableTimes,bookings)){
@@ -108,7 +107,7 @@ public class Salon {
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
                     // indsæt mulighed for index print
-                    if (enterPassword.equals(financePassword)){
+                    if (enterPassword.equals(financePassword)) {
                         //System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
 
                         System.out.println(pastBookings);
@@ -132,23 +131,34 @@ public class Salon {
         scanner.close();
 
     }
-    private static Booking getBookingDetails(Scanner scanner) {
-        System.out.println("Pleaser enter the following:");
-        System.out.println("Name: ");
-        String name = scanner.nextLine();
-        Scanner sc = new Scanner(System.in);
-        LocalDate date;
-        LocalTime time;
-        System.out.println("Enter booking date in format yyyy-mm-dd.");
-        date = LocalDate.parse(sc.nextLine());
-        System.out.println("Enter booking time in format hh:mm.");
-        time = LocalTime.parse(sc.nextLine());
-        System.out.println("Enter note: ");
-        String note = scanner.nextLine();
-        int amount = 0;
-        boolean paymentReceived = false;
 
-        return new Booking(name, note, date, time, amount, paymentReceived);
+    private static Booking getBookingDetails(Scanner scanner) {
+        try {
+            System.out.println("Pleaser enter the following:");
+            System.out.println("Name: ");
+            String name = scanner.nextLine();
+            Scanner sc = new Scanner(System.in);
+            LocalDate date;
+            LocalTime time;
+            System.out.println("Enter booking date in format yyyy-mm-dd.");
+            date = LocalDate.parse(sc.nextLine());
+            System.out.println("Enter booking time in format hh:mm.");
+            time = LocalTime.parse(sc.nextLine());
+            System.out.println("Enter note: ");
+            String note = scanner.nextLine();
+            int amount = 0;
+            boolean paymentReceived = false;
+
+            return new Booking(name, note, date, time, amount, paymentReceived);
+        } catch (DateTimeParseException e) {
+            System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd.");
+            return null;
+        }catch (Exception e){
+            System.out.println("And error has occured "+e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
     private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
