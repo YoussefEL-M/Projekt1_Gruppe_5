@@ -33,21 +33,6 @@ public class Booking implements Comparable<Booking>{
         return this.time.compareTo(b.time);
     }
 
-    public void removeBooking(ArrayList<LocalTime> bookingList){
-        LocalTime selectedTime = time;
-        if (!bookingList.contains(selectedTime)) {
-            System.out.println("Booking removed for " + name + " on " + date + " at time " + time + " O'Clock.");
-            // Find the correct position to add the time to maintain sorted order
-            int index = 0;
-            while (index < bookingList.size() && bookingList.get(index).isBefore(selectedTime)) {
-                index++;
-            }
-            bookingList.add(index, selectedTime);
-        }
-        else{
-            System.out.println("No booking found at the selected time.");
-        }
-    }
     public LocalDate getDate() {
         return date;
     }
