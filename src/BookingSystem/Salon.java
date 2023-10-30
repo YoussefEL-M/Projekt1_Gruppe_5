@@ -151,36 +151,6 @@ public class Salon {
         return new Booking(name, note, date, time, amount, paymentReceived);
     }
 
-    /* skal rettes!
-    public void addClosedDate(LocalDate closedDate) {
-        LocalDateTime startOfDay = LocalDateTime.of(closedDate, LocalTime.of(10, 0));
-        LocalDateTime endOfDay = LocalDateTime.of(closedDate, LocalTime.of(18, 0));
-
-        while (startOfDay.isBefore(endOfDay)) {
-            if (availableTimes.contains(startOfDay)) {
-                System.out.println("Removing time on closed date: " + startOfDay);
-                availableTimes.remove(startOfDay);
-            }
-            startOfDay = startOfDay.plusMinutes(30);
-        }
-        System.out.println("Adding closed date: " + closedDate);
-
-    }
-    public void addBooking(String name, LocalDate date, LocalTime time) {
-        if (isAvailable(date, time)) {
-            Booking newBook = new Booking(name, date, time);
-            newBook.createBooking(availableTimes);
-            attendance++;
-        }else{
-            System.out.println("Booking not available on this date or time.");
-        }
-    }*/
-    /*public void cancelBooking(String name, LocalDate date, LocalTime time) {
-        if (!isAvailable(date, time)) {
-            Booking removeBook = new Booking(name, date, time);
-            removeBook.removeBooking();
-        }
-    }*/
     private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
     if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
         // It's Saturday or Sunday
