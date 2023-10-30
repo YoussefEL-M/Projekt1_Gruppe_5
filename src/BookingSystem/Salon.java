@@ -154,16 +154,23 @@ public class Salon {
     private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
     if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
         // It's Saturday or Sunday
+        System.out.println();
+        System.out.println("Error: date is on a weekend.");
         return false;
     }
 
     for (Booking booking : bookings) {
         if (booking.getDate().equals(date) && booking.getTime().equals(time)) {
             // Booking already exists
+            System.out.println();
+            System.out.println("Error: a booking already exists at this time.");
             return false;
         }
     }
-
+    if(!closedDates.contains(date)){
+        System.out.println();
+        System.out.println("Error: the salon is closed on this day.");
+    }
     return !closedDates.contains(date) && availableTimes.contains(time);
     }  //isAvailable
 
