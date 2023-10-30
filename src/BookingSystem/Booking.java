@@ -4,7 +4,6 @@ package BookingSystem;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 
 public class Booking implements Comparable<Booking>{
      static int noOfBookings = 0;
