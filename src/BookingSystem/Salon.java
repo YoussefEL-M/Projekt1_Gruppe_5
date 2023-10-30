@@ -102,6 +102,8 @@ public class Salon {
 
                     System.out.println(newBookingT);
                     System.out.println("Transaction saved.");
+
+                    bookings.add(newBookingT);
                 }
                 case 5 -> {
                     System.out.println("Please enter the password: ");
@@ -133,32 +135,36 @@ public class Salon {
     }
 
     private static Booking getBookingDetails(Scanner scanner) {
-        try {
-            System.out.println("Pleaser enter the following:");
-            System.out.println("Name: ");
-            String name = scanner.nextLine();
-            Scanner sc = new Scanner(System.in);
-            LocalDate date;
-            LocalTime time;
-            System.out.println("Enter booking date in format yyyy-mm-dd.");
-            date = LocalDate.parse(sc.nextLine());
-            System.out.println("Enter booking time in format hh:mm.");
-            time = LocalTime.parse(sc.nextLine());
-            System.out.println("Enter note: ");
-            String note = scanner.nextLine();
-            int amount = 0;
-            boolean paymentReceived = false;
+        boolean details = true;
 
-            return new Booking(name, note, date, time, amount, paymentReceived);
-        } catch (DateTimeParseException e) {
-            System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd.");
-            return null;
-        }catch (Exception e){
-            System.out.println("And error has occured "+e.getMessage());
-            e.printStackTrace();
-            return null;
+        while(details) {
+            try {
+                System.out.println("Pleaser enter the following:");
+                System.out.println("Name: ");
+                String name = scanner.nextLine();
+                Scanner sc = new Scanner(System.in);
+                LocalDate date;
+                LocalTime time;
+                System.out.println("Enter booking date in format yyyy-mm-dd.");
+                date = LocalDate.parse(sc.nextLine());
+                System.out.println("Enter booking time in format hh:mm.");
+                time = LocalTime.parse(sc.nextLine());
+                System.out.println("Enter note: ");
+                String note = scanner.nextLine();
+                int amount = 0;
+                boolean paymentReceived = false;
+
+                return new Booking(name, note, date, time, amount, paymentReceived);
+            } catch (DateTimeParseException e) {
+                System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd.");
+                details = true;
+            } catch (Exception e) {
+                System.out.println("And error has occured " + e.getMessage());
+                e.printStackTrace();
+                details = true;
+            }
         }
-
+        return null;
     }
 
     private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
