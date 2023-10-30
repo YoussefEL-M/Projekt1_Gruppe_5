@@ -30,7 +30,7 @@ public class Salon {
 
         // Only for tests.
         System.out.println("Avaliable Booking List times: " + availableTimes);
-        System.out.println("Avaliable Booking List closeddates: " + closedDates);
+        System.out.println("Avaliable Booking List closed dates: " + closedDates);
         // end of test
 
         String financePassword = "hairyharry";
@@ -44,8 +44,7 @@ public class Salon {
             System.out.println("3. Add closed date");
             System.out.println("4. Edit booking transactions");
             System.out.println("5. View finances");
-            System.out.println("6. View services");
-            System.out.println("7. Exit");
+            System.out.println("6. Exit");
             System.out.print("Please enter your choice: \n");
 
             choice = scanner.nextInt();
@@ -78,7 +77,6 @@ public class Salon {
                 case 5 -> {
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
-                    // indsæt mulighed for index print
                     if (enterPassword.equals(financePassword)) {
                         //System.out.println("Access granted. Welcome to finance! You've had: "+attendance+" booking so far");
 
@@ -89,9 +87,6 @@ public class Salon {
                     }
 
                 }
-                case 6 -> {
-
-                }
                 case 7 -> {
                     FileManager.saveBookings(bookings);
                     System.out.println("Thanks for using our salon booking system. Goodbye!");
@@ -99,7 +94,7 @@ public class Salon {
                 default -> System.out.println("Error. Invalid input. Try again");
             } //switch
             System.out.println(availableTimes);
-        } while (choice != 7);
+        } while (choice != 6);
         scanner.close();
 
     }
@@ -126,7 +121,7 @@ public class Salon {
 
                 return new Booking(name, note, date, time, amount, paymentReceived);
             } catch (DateTimeParseException e) {
-                System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd.");
+                System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd/hh:mm.");
                 details = true;
             } catch (Exception e) {
                 System.out.println("And error has occured " + e.getMessage());
@@ -289,6 +284,20 @@ public class Salon {
                 System.out.println("And error has occured " + e.getMessage());
                 e.printStackTrace();
                 t = true;
+            }
+        }
+    }
+    static void showBookings(ArrayList<Booking> list,ArrayList<LocalDate> closedDates, LocalDate date){
+        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(date)) {
+            System.out.println();
+            System.out.println("Error: The salon is not open for business on this day.");
+        }
+        else{
+            list.sort(null);
+            System.out.println();
+            for(Booking b: list){
+                if (b.date.isEqual(date))
+                    System.out.println(b);
             }
         }
     }

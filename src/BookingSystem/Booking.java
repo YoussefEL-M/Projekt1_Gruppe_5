@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-public class Booking {
+public class Booking implements Comparable<Booking>{
      static int noOfBookings = 0;
      int indexNo;
     String name;
@@ -28,6 +28,9 @@ public class Booking {
 
     public String toString(){
         return indexNo+". "+name+" - "+date+" "+time+" - "+note;
+    }
+    public int compareTo(Booking b){
+        return this.time.compareTo(b.time);
     }
 
     public void removeBooking(ArrayList<LocalTime> bookingList){
