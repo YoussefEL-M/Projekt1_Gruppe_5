@@ -76,14 +76,9 @@ public class Salon {
                     }*/
                 }
                 case 3 -> {
-                    System.out.println("Enter closed date:");
-                    System.out.println("Year: ");
-                    int closedYear = scanner.nextInt();
-                    System.out.println("Month: ");
-                    int closedMonth = scanner.nextInt();
-                    System.out.println("Day: ");
-                    int closedDay = scanner.nextInt();
-                    LocalDate closedDate = LocalDate.of(closedYear, closedMonth, closedDay);
+                    Scanner sc = new Scanner(System.in);
+                    System.out.println("Enter closed date in format yyyy-mm-dd.");
+                    LocalDate closedDate = LocalDate.parse(sc.nextLine());
                     closedDates.add(closedDate);
                     System.out.println("Closed date added: " + closedDate);
                 }
