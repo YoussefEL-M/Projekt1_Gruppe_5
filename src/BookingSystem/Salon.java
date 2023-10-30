@@ -247,7 +247,7 @@ public class Salon {
                     String paymentReceivedInput = scanner.nextLine();
                     boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
-                    bookingToEdit.transaction.setAmount(newAmount);
+                    bookingToEdit.transaction.addAmount(newAmount);
                     bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
 
                     System.out.println("Booking edited successfully!");
