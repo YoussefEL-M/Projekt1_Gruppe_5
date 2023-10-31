@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class Salon {
     public static void main(String[] args) throws IOException {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
-        ArrayList<LocalDate> closedDates = new ArrayList<>();
+        ArrayList<LocalDate> closedDates = FileManager.getClosedDays();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
         ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
 
@@ -83,6 +83,8 @@ public class Salon {
                 }
                 case 6 -> {
                     FileManager.saveBookings(bookings);
+                    FileManager.saveClosedDays(closedDates);
+                    FileManager.backupBookings(new ArrayList<Booking>());
                     System.out.println("Thanks for using our salon booking system. Goodbye!");
                 }
                 default -> System.out.println("Error. Invalid input. Try again");
