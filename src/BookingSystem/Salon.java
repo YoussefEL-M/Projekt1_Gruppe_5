@@ -116,7 +116,7 @@ public class Salon {
 
                 return new Booking(name, note, date, time, amount, paymentReceived);
             } catch (DateTimeParseException e) {
-                System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd/hh:mm.");
+                System.out.println("An invalid date/time format. Please use the following format for date: yyyy-mm-dd, and for time: hh:mm.");
                 details = true;
             } catch (Exception e) {
                 System.out.println("And error has occured " + e.getMessage());
