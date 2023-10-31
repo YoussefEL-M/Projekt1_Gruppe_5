@@ -318,11 +318,17 @@ public class Salon {
             System.out.println("Error: The salon is not open for business on this day.");
         }
         else{
+            boolean check = false;
             list.sort(null);
             System.out.println();
             for(Booking b: list){
-                if (b.date.isEqual(date))
+                if (b.date.isEqual(date)) {
                     System.out.println(b);
+                    check=true;
+                }
+            }
+            if(!check){
+                System.out.println("No booking found for that date.");
             }
         }
     }
