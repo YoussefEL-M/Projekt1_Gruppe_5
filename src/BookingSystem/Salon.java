@@ -27,6 +27,7 @@ public class Salon {
         }
         Scanner scanner = new Scanner(System.in);
         int choice;
+        boolean case1 = true;
 
         String financePassword = "hairyharry";
 
@@ -34,18 +35,48 @@ public class Salon {
             System.out.println("Welcome to Harry's Salon!");
             System.out.println("Hairy?");
             System.out.println("See Cotter!");
-            System.out.println("1. Book appointment");
-            System.out.println("2. Cancel appointment");
-            System.out.println("3. Add closed date");
-            System.out.println("4. Edit booking transactions");
-            System.out.println("5. View finances");
-            System.out.println("6. Exit");
+            System.out.println("1. Search a date");
+            System.out.println("2. Book appointment");
+            System.out.println("3. Cancel appointment");
+            System.out.println("4. Add closed date");
+            System.out.println("5. Edit booking transactions");
+            System.out.println("6. View finances");
+            System.out.println("7. Exit");
             System.out.print("Please enter your choice: \n");
 
             choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
                 case 1 -> {
+                    while (case1) {
+                        System.out.println("1. Show bookings on a specific date");
+                        System.out.println("2. Show available dates - and 4 days ahead on a specific date");
+                        System.out.println("3. Go back");
+
+                        choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (choice) {
+                            case 1 -> {
+                                Scanner sc = new Scanner(System.in);
+                                System.out.println("Enter date in format yyyy-mm-dd");
+                                LocalDate searchDate = LocalDate.parse(sc.nextLine());
+                                showBookings(bookings,closedDates,searchDate);
+                            }
+                            case 2 -> {
+                                Scanner sc = new Scanner(System.in);
+                                System.out.println("Enter date in format yyyy-mm-dd");
+                                LocalDate searchDate = LocalDate.parse(sc.nextLine());
+                                searchBookings(bookings,searchDate,availableTimes,closedDates);
+                            }
+                            case 3 -> {
+                                System.out.println("Returning to main menu");
+                            }
+                            default -> System.out.println("Error. Invalid input. Try again");
+                        }
+                        break;
+                    }
+                }
+                case 2 -> {
                     Booking newBook = getBookingDetails(scanner);
 
                     if (isAvailable(newBook.getDate(), newBook.getTime(), closedDates, availableTimes, bookings)) {
@@ -55,10 +86,10 @@ public class Salon {
                         System.out.println("The selected time is unavailable. Please choose another time.");
                     }
                 }
-                case 2 -> {
+                case 3 -> {
                     cancelBooking(bookings, closedDates, availableTimes, scanner);
                 }
-                case 3 -> {
+                case 4 -> {
                     Scanner sc = new Scanner(System.in);
                     System.out.println("Enter closed date in format yyyy-mm-dd.");
                     LocalDate closedDate = LocalDate.parse(sc.nextLine());
@@ -66,10 +97,10 @@ public class Salon {
                     FileManager.saveClosedDays(closedDates);
                     System.out.println("Closed date added: " + closedDate);
                 }
-                case 4 -> {
+                case 5 -> {
                     editBooking(bookings, closedDates, availableTimes, scanner);
                 }
-                case 5 -> {
+                case 6 -> {
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
                     if (enterPassword.equals(financePassword)) {
@@ -81,7 +112,7 @@ public class Salon {
                     }
 
                 }
-                case 6 -> {
+                case 7 -> {
                     FileManager.saveBookings(bookings);
                     FileManager.saveClosedDays(closedDates);
                     FileManager.backupBookings(new ArrayList<Booking>());
@@ -89,8 +120,7 @@ public class Salon {
                 }
                 default -> System.out.println("Error. Invalid input. Try again");
             } //switch
-            System.out.println(availableTimes);
-        } while (choice != 6);
+        } while (choice != 7);
         scanner.close();
     }
 
