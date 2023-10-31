@@ -182,43 +182,48 @@ public class Salon {
     }  //isAvailable
 
     static void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
-        if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
-            System.out.println();
-            System.out.println("Error: The salon is not open for business on this day.");
-        } else {
-            for (int i = 1; i <= 5; ) {
-                if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
-                    searchDate = searchDate.plusDays(1);
-                    continue;
-                }
-
-                ArrayList<Booking> matchingDate = new ArrayList<>();
-                boolean check = false;
-
-                for (Booking b : list) {
-                    if (b.date.isEqual(searchDate))
-                        matchingDate.add(b);
-                } //for
-
+        try{
+            if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
                 System.out.println();
-                System.out.println("Available times for " + searchDate + ":");
-                System.out.println();
+                System.out.println("Error: The salon is not open for business on this day.");
+            } else {
+                for (int i = 1; i <= 5; ) {
+                    if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
+                        searchDate = searchDate.plusDays(1);
+                        continue;
+                    }
 
-                for (LocalTime t : times) {
-                    check = false;
-                    for (Booking b : matchingDate) {
-                        if (b.time.equals(t)) {
-                            check = true;
-                            break;
-                        }
+                    ArrayList<Booking> matchingDate = new ArrayList<>();
+                    boolean check = false;
+
+                    for (Booking b : list) {
+                        if (b.date.isEqual(searchDate))
+                            matchingDate.add(b);
                     } //for
-                    if (!check)
-                        System.out.println(t);
+
+                    System.out.println();
+                    System.out.println("Available times for " + searchDate + ":");
+                    System.out.println();
+
+                    for (LocalTime t : times) {
+                        check = false;
+                        for (Booking b : matchingDate) {
+                            if (b.time.equals(t)) {
+                                check = true;
+                                break;
+                            }
+                        } //for
+                        if (!check)
+                            System.out.println(t);
+                    } //for
+                    searchDate = searchDate.plusDays(1);
+                    i++;
                 } //for
-                searchDate = searchDate.plusDays(1);
-                i++;
-            } //for
-        } //else
+            }//else
+        }catch (Exception e){
+            System.out.println("An error occured: "+e.getMessage());
+            e.printStackTrace();
+        }
     }//searchBookings
 
     private static void cancelBooking(ArrayList<Booking> bookings, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, Scanner scanner) {
@@ -314,23 +319,27 @@ public class Salon {
         }
     }
     static void showBookings(ArrayList<Booking> list,ArrayList<LocalDate> closedDates, LocalDate date){
-        if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(date)) {
-            System.out.println();
-            System.out.println("Error: The salon is not open for business on this day.");
-        }
-        else{
-            boolean check = false;
-            list.sort(null);
-            System.out.println();
-            for(Booking b: list){
-                if (b.date.isEqual(date)) {
-                    System.out.println(b);
-                    check=true;
+        try {
+            if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(date)) {
+                System.out.println();
+                System.out.println("Error: The salon is not open for business on this day.");
+            } else {
+                boolean check = false;
+                list.sort(null);
+                System.out.println();
+                for (Booking b : list) {
+                    if (b.date.isEqual(date)) {
+                        System.out.println(b);
+                        check = true;
+                    }
+                }
+                if (!check) {
+                    System.out.println("No booking found for that date.");
                 }
             }
-            if(!check){
-                System.out.println("No booking found for that date.");
-            }
+        }catch (Exception e) {
+            System.out.println("An error has occured: "+e.getMessage());
+            e.printStackTrace();
         }
     }
 }
