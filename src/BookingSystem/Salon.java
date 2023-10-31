@@ -195,7 +195,7 @@ public class Salon {
 
         while (t) {
             try {
-                System.out.println("Enter the date of the booking in format yyyy-mm-dd: ");
+                System.out.println("Enter the date of the booking in format yyyy-mm-dd. ");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
                 System.out.println("Enter the time of the booking in format hh:mm: ");
@@ -236,10 +236,10 @@ public class Salon {
                 System.out.println("Enter the name of the booking you want to edit: ");
                 String searchName = scanner.nextLine();
 
-                System.out.println("Enter the date of the booking in format yyyy-mm-dd: ");
+                System.out.println("Enter the date of the booking in format yyyy-mm-dd. ");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
-                System.out.println("Enter the time of the booking in format hh:mm: ");
+                System.out.println("Enter the time of the booking in format hh:mm. ");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
                 Booking bookingToEdit = null;
