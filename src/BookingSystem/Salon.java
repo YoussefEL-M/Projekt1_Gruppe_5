@@ -41,7 +41,8 @@ public class Salon {
             System.out.println("4. Add closed date");
             System.out.println("5. Edit booking transactions");
             System.out.println("6. View finances");
-            System.out.println("7. Exit");
+            System.out.println("7. Recover data after crash or power cut");
+            System.out.println("8. Exit");
             System.out.print("Please enter your choice: \n");
 
             choice = scanner.nextInt();
@@ -50,7 +51,7 @@ public class Salon {
                 case 1 -> {
                     while (case1) {
                         System.out.println("1. Show bookings on a specific date");
-                        System.out.println("2. Show available dates - and 4 days ahead on a specific date");
+                        System.out.println("2. Show available times for a specific date and four business days forward");
                         System.out.println("3. Go back");
 
                         choice = scanner.nextInt();
@@ -126,14 +127,25 @@ public class Salon {
                     }
                 }
                 case 7 -> {
+                    try {
+                        ArrayList<Booking> backupData = FileManager.getBookings("Backup");
+                        bookings.addAll(backupData);
+                        System.out.println();
+                        System.out.println("Data successfully recovered.");
+                    } catch (IOException e){
+                        System.out.println("Error: no data to recover.");
+                    }
+                }
+                case 8 -> {
                     FileManager.saveBookings(bookings);
                     FileManager.saveClosedDays(closedDates);
                     FileManager.backupBookings(new ArrayList<Booking>());
+                    System.out.println();
                     System.out.println("Thanks for using our salon booking system. Goodbye!");
                 }
                 default -> System.out.println("Error. Invalid input. Try again");
             } //switch
-        } while (choice != 7);
+        } while (choice != 8);
         scanner.close();
     }
 
@@ -281,10 +293,10 @@ public class Salon {
 
         while (t) {
             try {
-                System.out.println("Enter the date of the booking in format yyyy-mm-dd: ");
+                System.out.println("Enter the date of the booking in format yyyy-mm-dd");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
-                System.out.println("Enter the time of the booking in format hh:mm: ");
+                System.out.println("Enter the time of the booking in format hh:mm");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
                 Booking bookingToEdit = null;
@@ -343,11 +355,11 @@ public class Salon {
                     }
                 }
                 if (!check) {
-                    System.out.println("No booking found for that date.");
+                    System.out.println("No bookings found for that date.");
                 }
             }
         }catch (Exception e) {
-            System.out.println("An error has occured: "+e.getMessage());
+            System.out.println("An error has occurred: "+e.getMessage());
             e.printStackTrace();
         }
     }
