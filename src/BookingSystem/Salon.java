@@ -315,8 +315,8 @@ public class Salon {
                 }
 
 
+                System.out.println();
                 if (bookingToEdit != null) {
-                    System.out.println();
                     System.out.println("Current booking details:");
                     System.out.println(bookingToEdit);
 
@@ -336,7 +336,6 @@ public class Salon {
                     t=false;
                     FileManager.saveBookings(bookings,pastBookings);
                 } else {
-                    System.out.println();
                     System.out.println("No matching booking found.");
                 }
             }catch (DateTimeParseException e) {
