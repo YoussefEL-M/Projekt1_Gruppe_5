@@ -19,7 +19,6 @@ public class Salon {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = FileManager.getClosedDays();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
-        ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
         ArrayList<Booking> backup = new ArrayList<>();
 
         for (int hour = 10; hour < 18; hour++) {
@@ -116,14 +115,14 @@ public class Salon {
                     }
                 }
                 case 5 -> {
-                    editBooking(bookings, closedDates, availableTimes, scanner);
+                    editBooking(FileManager.getBookings("PastBookings"), closedDates, availableTimes, scanner);
                 }
                 case 6 -> {
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
                     if (enterPassword.equals(financePassword)) {
 
-                        System.out.println(pastBookings);
+                        System.out.println(FileManager.getBookings("PastBookings"));
 
                     } else {
                         System.out.println("Incorrect password. Please try again ");
@@ -296,6 +295,8 @@ public class Salon {
 
         while (t) {
             try {
+                ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
+
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
@@ -323,12 +324,14 @@ public class Salon {
                     String paymentReceivedInput = scanner.nextLine();
                     boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
+                    t=false;
+
                     bookingToEdit.transaction.addAmount(newAmount);
-                    bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
+                    bookingToEdit.transaction.setPaymentReceived(newPaymentReceived = true);
 
                     System.out.println("Booking edited successfully!");
-                    t=false;
-                    FileManager.saveBookings(bookings);
+
+                    FileManager.saveBookings(bookings, pastBookings);
                 } else {
                     System.out.println("No matching booking found.");
                 }

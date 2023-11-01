@@ -4,7 +4,7 @@ package BookingSystem;
 public class Transaction{
 
     private double amount;
-    private boolean paymentReceived = false;
+    private boolean paymentReceived;
 
     public Transaction(double amount, boolean paymentReceived){
         this.amount = amount;

@@ -26,7 +26,7 @@ public class Booking implements Comparable<Booking> {
     }
 
     public String toString() {
-        return indexNo + ". " + name + " - " + date + " " + time + " - " + note;
+        return indexNo + ". " + name + " - " + date + " " + time + " - " + note + " - " + transaction.getAmount() + " - " + transaction.getPaymentReceived();
     }
 
     public int compareTo(Booking b) {
