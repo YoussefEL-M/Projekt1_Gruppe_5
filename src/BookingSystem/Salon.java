@@ -30,7 +30,7 @@ public class Salon {
             System.out.println("Welcome to Harry's Salon!");
             System.out.println("Hairy?");
             System.out.println("See Cotter!");
-            System.out.println("1. Search a date");
+            System.out.println("1. Search times or bookings");
             System.out.println("2. Book appointment");
             System.out.println("3. Cancel appointment");
             System.out.println("4. Add closed date");
@@ -341,13 +341,24 @@ public class Salon {
                 System.out.println("Error: The salon is not open for business on this day.");
             } else {
                 boolean check = false;
-                list.sort(null);
-                System.out.println();
-                for (Booking b : list) {
-                    if (b.date.isEqual(date)) {
-                        System.out.println(b);
+
+                // I've opted to make this code a little more complex in order to dramatically speed up sorting.
+                // I don't know if it's worth it, but I choose to believe that it is.
+                // Especially when the system is going to handle ~1000 bookings at a time.
+
+                ArrayList<Booking> sortedList = new ArrayList<>();
+
+                for(Booking b: list){
+                    if(b.date.isEqual(date)) {
+                        sortedList.add(b);
                         check = true;
                     }
+                }
+
+                sortedList.sort(null);
+                System.out.println();
+                for (Booking b : sortedList) {
+                    System.out.println(b);
                 }
                 if (!check) {
                     System.out.println("No bookings found for that date.");
