@@ -5,16 +5,16 @@ package BookingSystem;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class Booking implements Comparable<Booking>{
-     static int noOfBookings = 0;
-     int indexNo;
+public class Booking implements Comparable<Booking> {
+    static int noOfBookings = 0;
+    int indexNo;
     String name;
     String note;
     LocalTime time;
     LocalDate date;
-    Transaction transaction = new Transaction(0,false);
+    Transaction transaction = new Transaction(0, false);
 
-    Booking(String name, String note, LocalDate date, LocalTime time, double amount, boolean paymentReceived){
+    Booking(String name, String note, LocalDate date, LocalTime time, double amount, boolean paymentReceived) {
         indexNo = noOfBookings;
         noOfBookings++;
         this.name = name;
@@ -25,10 +25,11 @@ public class Booking implements Comparable<Booking>{
         transaction.setPaymentReceived(paymentReceived);
     }
 
-    public String toString(){
-        return indexNo+". "+name+" - "+date+" "+time+" - "+note;
+    public String toString() {
+        return indexNo + ". " + name + " - " + date + " " + time + " - " + note;
     }
-    public int compareTo(Booking b){
+
+    public int compareTo(Booking b) {
         return this.time.compareTo(b.time);
     }
 
@@ -38,8 +39,5 @@ public class Booking implements Comparable<Booking>{
 
     public LocalTime getTime() {
         return time;
-    }
-    public String getName(){
-        return name;
     }
 }
