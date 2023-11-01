@@ -62,7 +62,7 @@ public class Salon {
                                 Scanner sc = new Scanner(System.in);
                                 System.out.println("Enter date in format yyyy-mm-dd");
                                 LocalDate searchDate = LocalDate.parse(sc.nextLine());
-                                searchBookings(bookings,searchDate,availableTimes,closedDates);
+                                searchTimes(bookings,searchDate,availableTimes,closedDates);
                             }
                             case 3 -> System.out.println("Returning to main menu");
                             default -> System.out.println("Error. Invalid input. Try again");
@@ -188,7 +188,7 @@ public class Salon {
         return !closedDates.contains(date) && availableTimes.contains(time);
     }  //isAvailable
 
-    static void searchBookings(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
+    static void searchTimes(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
         try{
             if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
                 System.out.println();
@@ -231,7 +231,7 @@ public class Salon {
             System.out.println("An error occurred: "+e.getMessage());
             e.printStackTrace();
         }
-    }//searchBookings
+    }//searchTimes
 
     private static void cancelBooking(ArrayList<Booking> bookings, Scanner scanner) {
         boolean t = true;
