@@ -281,9 +281,6 @@ public class Salon {
 
         while (t) {
             try {
-                System.out.println("Enter the name of the booking you want to edit: ");
-                String searchName = scanner.nextLine();
-
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
@@ -293,7 +290,7 @@ public class Salon {
                 Booking bookingToEdit = null;
 
                 for (Booking booking : bookings) {
-                    if (booking.getName().equals(searchName) && booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
+                    if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
                         bookingToEdit = booking;
                         break;
                     }
