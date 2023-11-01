@@ -41,7 +41,8 @@ public class Salon {
             System.out.println("4. Add closed date");
             System.out.println("5. Edit booking transactions");
             System.out.println("6. View finances");
-            System.out.println("7. Exit");
+            System.out.println("7. Recover data after crash or power cut");
+            System.out.println("8. Exit");
             System.out.print("Please enter your choice: \n");
 
             choice = scanner.nextInt();
@@ -114,14 +115,25 @@ public class Salon {
 
                 }
                 case 7 -> {
+                    try {
+                        ArrayList<Booking> backupData = FileManager.getBookings("Backup");
+                        bookings.addAll(backupData);
+                        System.out.println();
+                        System.out.println("Data successfully recovered.");
+                    } catch (IOException e){
+                        System.out.println("Error: no data to recover.");
+                    }
+                }
+                case 8 -> {
                     FileManager.saveBookings(bookings);
                     FileManager.saveClosedDays(closedDates);
                     FileManager.backupBookings(new ArrayList<Booking>());
+                    System.out.println();
                     System.out.println("Thanks for using our salon booking system. Goodbye!");
                 }
                 default -> System.out.println("Error. Invalid input. Try again");
             } //switch
-        } while (choice != 7);
+        } while (choice != 8);
         scanner.close();
     }
 
