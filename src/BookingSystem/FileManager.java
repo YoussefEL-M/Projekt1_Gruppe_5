@@ -64,6 +64,28 @@ public class FileManager {
         secondFile.close();
     } //saveBookings
 
+    static void saveBookings(ArrayList<Booking> list, ArrayList<Booking> pastList) throws IOException {
+        FileWriter file = new FileWriter("Bookings.txt");
+        FileWriter secondFile = new FileWriter("PastBookings.txt");
+        PrintWriter out = new PrintWriter(file);
+        PrintWriter secondOut = new PrintWriter(secondFile);
+
+        for(Booking b: pastList){
+            secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+        }
+
+        for(Booking b: list){
+            if(b.date.isBefore(LocalDate.now())){
+                secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+            }
+            else{
+                out.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+            }
+        } //for
+        file.close();
+        secondFile.close();
+    } //saveBookings
+
     static ArrayList<LocalDate> getClosedDays() throws IOException {
         ArrayList<LocalDate> list = new ArrayList<>();
         FileReader file = new FileReader("ClosedDays.txt");
