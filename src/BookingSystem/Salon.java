@@ -115,7 +115,7 @@ public class Salon {
                     }
                 }
                 case 5 -> {
-                    editBooking(FileManager.getBookings("PastBookings"), closedDates, availableTimes, scanner);
+                    editBooking(bookings, closedDates, availableTimes, scanner);
                 }
                 case 6 -> {
                     System.out.println("Please enter the password: ");
@@ -305,7 +305,7 @@ public class Salon {
 
                 Booking bookingToEdit = null;
 
-                for (Booking booking : bookings) {
+                for (Booking booking : pastBookings) {
                     if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
                         bookingToEdit = booking;
                         break;
@@ -316,7 +316,7 @@ public class Salon {
                     System.out.println("Current booking details:");
                     System.out.println(bookingToEdit);
 
-                    System.out.println("Enter the new amount: ");
+                    System.out.println("Enter amount to add: ");
                     double newAmount = scanner.nextDouble();
                     scanner.nextLine();
 
@@ -324,14 +324,13 @@ public class Salon {
                     String paymentReceivedInput = scanner.nextLine();
                     boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
-                    t=false;
-
                     bookingToEdit.transaction.addAmount(newAmount);
                     bookingToEdit.transaction.setPaymentReceived(newPaymentReceived = true);
 
                     System.out.println("Booking edited successfully!");
 
-                    FileManager.saveBookings(bookings, pastBookings);
+                    t=false;
+                    FileManager.saveBookings(bookings,pastBookings);
                 } else {
                     System.out.println("No matching booking found.");
                 }
