@@ -305,12 +305,21 @@ public class Salon {
 
                 Booking bookingToEdit = null;
 
-                for (Booking booking : pastBookings) {
+                for (Booking booking : bookings) {
                     if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
                         bookingToEdit = booking;
                         break;
                     }
                 }
+                if(bookingToEdit==null) {
+                    for (Booking booking : pastBookings) {
+                        if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
+                            bookingToEdit = booking;
+                            break;
+                        }
+                    }
+                }
+
 
                 if (bookingToEdit != null) {
                     System.out.println("Current booking details:");
@@ -325,7 +334,7 @@ public class Salon {
                     boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
                     bookingToEdit.transaction.addAmount(newAmount);
-                    bookingToEdit.transaction.setPaymentReceived(newPaymentReceived = true);
+                    bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
 
                     System.out.println("Booking edited successfully!");
 
