@@ -50,7 +50,7 @@ public class Salon {
                 case 1 -> {
                     while (case1) {
                         System.out.println("1. Show bookings on a specific date");
-                        System.out.println("2. Show available dates - and 4 days ahead on a specific date");
+                        System.out.println("2. Show available times for a specific date and four business days forward");
                         System.out.println("3. Go back");
 
                         choice = scanner.nextInt();
