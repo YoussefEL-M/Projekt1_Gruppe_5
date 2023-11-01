@@ -5,3 +5,4 @@ Lena,Wingcut,2023-11-22,11:30,0.0,false
 Miho Benoit-Hatherton,Earcut,2023-11-22,22:41,40.0,false
 Aspen Benoit,Hatcut,2023-11-22,22:42,40.0,false
 Juliet Hatherton,Fangcut,2023-11-22,22:43,50.0,false
+Meemo,FKC,2023-11-22,13:00,0.0,false

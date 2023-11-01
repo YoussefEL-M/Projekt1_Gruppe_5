@@ -27,6 +27,7 @@ public class Salon {
         String financePassword = "hairyharry";
 
         do {
+            System.out.println();
             System.out.println("Welcome to Harry's Salon!");
             System.out.println("Hairy?");
             System.out.println("See Cotter!");
@@ -45,6 +46,7 @@ public class Salon {
             switch (choice) {
                 case 1 -> {
                     while (choice!=3) {
+                        System.out.println();
                         System.out.println("1. Show bookings on a specific date");
                         System.out.println("2. Show available times for a specific date and four business days forward");
                         System.out.println("3. Go back");
@@ -53,15 +55,15 @@ public class Salon {
                         scanner.nextLine();
                         switch (choice) {
                             case 1 -> {
-                                Scanner sc = new Scanner(System.in);
+                                System.out.println();
                                 System.out.println("Enter date in format yyyy-mm-dd");
-                                LocalDate searchDate = LocalDate.parse(sc.nextLine());
+                                LocalDate searchDate = LocalDate.parse(scanner.nextLine());
                                 showBookings(bookings,closedDates,searchDate);
                             }
                             case 2 -> {
-                                Scanner sc = new Scanner(System.in);
+                                System.out.println();
                                 System.out.println("Enter date in format yyyy-mm-dd");
-                                LocalDate searchDate = LocalDate.parse(sc.nextLine());
+                                LocalDate searchDate = LocalDate.parse(scanner.nextLine());
                                 searchTimes(bookings,searchDate,availableTimes,closedDates);
                             }
                             case 3 -> System.out.println("Returning to main menu");
@@ -76,8 +78,10 @@ public class Salon {
                         bookings.add(newBook);
                         backup.add(newBook);
                         FileManager.backupBookings(backup);
+                        System.out.println();
                         System.out.println("Booking created for " + " on " + newBook.getDate() + " at time " + newBook.getTime() + " O'Clock.");
                     } else {
+                        System.out.println();
                         System.out.println("The selected time is unavailable. Please choose another time.");
                     }
                 }
@@ -87,14 +91,15 @@ public class Salon {
 
                     while(t) {
                         try {
-                            Scanner sc = new Scanner(System.in);
+                            System.out.println();
                             System.out.println("Enter closed date in format yyyy-mm-dd.");
-                            LocalDate closedDate = LocalDate.parse(sc.nextLine());
+                            LocalDate closedDate = LocalDate.parse(scanner.nextLine());
                             closedDates.add(closedDate);
                             FileManager.saveClosedDays(closedDates);
                             System.out.println("Closed date added: " + closedDate);
                             t = false;
                         } catch (DateTimeParseException e) {
+                            System.out.println();
                             System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
                         } catch (Exception e) {
                             System.out.println("An error has occurred " + e.getMessage());
@@ -103,6 +108,7 @@ public class Salon {
                 }
                 case 5 -> editBooking(bookings, scanner);
                 case 6 -> {
+                    System.out.println();
                     System.out.println("Please enter the password: ");
                     String enterPassword = scanner.nextLine();
                     if (enterPassword.equals(financePassword)) {
@@ -110,6 +116,7 @@ public class Salon {
                         System.out.println(FileManager.getBookings("PastBookings"));
 
                     } else {
+                        System.out.println();
                         System.out.println("Incorrect password. Please try again ");
                     }
                 }
@@ -118,9 +125,9 @@ public class Salon {
                         ArrayList<Booking> backupData = FileManager.getBookings("Backup");
                         bookings.addAll(backupData);
                         System.out.println();
-                        System.out.println("Data successfully recovered.");
+                        System.out.println(backupData.isEmpty() ? "Error: No data to recover." : "Data successfully recovered.");
                     } catch (IOException e){
-                        System.out.println("Error: no data to recover.");
+                        System.out.println("Error: Failed to read recovery data.");
                     }
                 }
                 case 8 -> {
@@ -140,16 +147,16 @@ public class Salon {
 
         while (true) {
             try {
+                System.out.println();
                 System.out.println("Pleaser enter the following:");
                 System.out.println("Name: ");
                 String name = scanner.nextLine();
-                Scanner sc = new Scanner(System.in);
                 LocalDate date;
                 LocalTime time;
                 System.out.println("Enter booking date in format yyyy-mm-dd.");
-                date = LocalDate.parse(sc.nextLine());
+                date = LocalDate.parse(scanner.nextLine());
                 System.out.println("Enter booking time in format hh:mm.");
-                time = LocalTime.parse(sc.nextLine());
+                time = LocalTime.parse(scanner.nextLine());
                 System.out.println("Enter note: ");
                 String note = scanner.nextLine();
                 int amount = 0;
@@ -157,6 +164,7 @@ public class Salon {
 
                 return new Booking(name, note, date, time, amount, paymentReceived);
             } catch (DateTimeParseException e) {
+                System.out.println();
                 System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
             } catch (Exception e) {
                 System.out.println("An error has occurred " + e.getMessage());
@@ -238,6 +246,7 @@ public class Salon {
 
         while (t) {
             try {
+                System.out.println();
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
@@ -249,7 +258,8 @@ public class Salon {
                 for (Booking booking : bookings) {
                     if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
                         bookingToRemove = booking;
-                        System.out.println("Booking found, and cancelled.");
+                        System.out.println();
+                        System.out.println("Booking successfully cancelled.");
                         t = false;
                         break;
                     }
@@ -258,9 +268,11 @@ public class Salon {
                     bookings.remove(bookingToRemove);
                 }
                 else {
+                    System.out.println();
                     System.out.println("No booking found on this date.");
                 }
             }catch (DateTimeParseException e) {
+                System.out.println();
                 System.out.println("Date/Time format is invalid.");
                 t = true;
             } catch (Exception e) {
@@ -276,6 +288,7 @@ public class Salon {
 
         while (t) {
             try {
+                System.out.println();
                 ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
 
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd");
@@ -303,6 +316,7 @@ public class Salon {
 
 
                 if (bookingToEdit != null) {
+                    System.out.println();
                     System.out.println("Current booking details:");
                     System.out.println(bookingToEdit);
 
@@ -322,9 +336,11 @@ public class Salon {
                     t=false;
                     FileManager.saveBookings(bookings,pastBookings);
                 } else {
+                    System.out.println();
                     System.out.println("No matching booking found.");
                 }
             }catch (DateTimeParseException e) {
+                System.out.println();
                 System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
                 t = true;
             } catch (Exception e) {
