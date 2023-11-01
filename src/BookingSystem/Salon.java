@@ -20,6 +20,7 @@ public class Salon {
         ArrayList<LocalDate> closedDates = FileManager.getClosedDays();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
         ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
+        ArrayList<Booking> backup = new ArrayList<>();
 
         for (int hour = 10; hour < 18; hour++) {
             availableTimes.add(LocalTime.of(hour, 0));
@@ -83,6 +84,8 @@ public class Salon {
 
                     if (isAvailable(newBook.getDate(), newBook.getTime(), closedDates, availableTimes, bookings)) {
                         bookings.add(newBook);
+                        backup.add(newBook);
+                        FileManager.backupBookings(backup);
                         System.out.println("Booking created for " + " on " + newBook.getDate() + " at time " + newBook.getTime() + " O'Clock.");
                     } else {
                         System.out.println("The selected time is unavailable. Please choose another time.");
