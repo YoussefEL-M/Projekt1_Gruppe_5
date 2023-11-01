@@ -95,12 +95,25 @@ public class Salon {
                     cancelBooking(bookings, closedDates, availableTimes, scanner);
                 }
                 case 4 -> {
-                    Scanner sc = new Scanner(System.in);
-                    System.out.println("Enter closed date in format yyyy-mm-dd.");
-                    LocalDate closedDate = LocalDate.parse(sc.nextLine());
-                    closedDates.add(closedDate);
-                    FileManager.saveClosedDays(closedDates);
-                    System.out.println("Closed date added: " + closedDate);
+                    boolean t = true;
+
+                    while(t) {
+                        try {
+                            Scanner sc = new Scanner(System.in);
+                            System.out.println("Enter closed date in format yyyy-mm-dd.");
+                            LocalDate closedDate = LocalDate.parse(sc.nextLine());
+                            closedDates.add(closedDate);
+                            FileManager.saveClosedDays(closedDates);
+                            System.out.println("Closed date added: " + closedDate);
+                            t = false;
+                        } catch (DateTimeParseException e) {
+                            System.out.println("An invalid date/time format. Please use the following format yyyy-mm-dd.");
+                            t = true;
+                        } catch (Exception e) {
+                            System.out.println("And error has occured " + e.getMessage());
+                            t = true;
+                        }
+                    }
                 }
                 case 5 -> {
                     editBooking(bookings, closedDates, availableTimes, scanner);
@@ -115,7 +128,6 @@ public class Salon {
                     } else {
                         System.out.println("Incorrect password. Please try again ");
                     }
-
                 }
                 case 7 -> {
                     try {
