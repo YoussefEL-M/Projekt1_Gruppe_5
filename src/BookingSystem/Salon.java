@@ -272,10 +272,10 @@ public class Salon {
                 System.out.println("Enter the name of the booking you want to edit: ");
                 String searchName = scanner.nextLine();
 
-                System.out.println("Enter the date of the booking in format yyyy-mm-dd: ");
+                System.out.println("Enter the date of the booking in format yyyy-mm-dd");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
-                System.out.println("Enter the time of the booking in format hh:mm: ");
+                System.out.println("Enter the time of the booking in format hh:mm");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
                 Booking bookingToEdit = null;
@@ -334,11 +334,11 @@ public class Salon {
                     }
                 }
                 if (!check) {
-                    System.out.println("No booking found for that date.");
+                    System.out.println("No bookings found for that date.");
                 }
             }
         }catch (Exception e) {
-            System.out.println("An error has occured: "+e.getMessage());
+            System.out.println("An error has occurred: "+e.getMessage());
             e.printStackTrace();
         }
     }
