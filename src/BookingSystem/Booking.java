@@ -6,8 +6,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class Booking implements Comparable<Booking> {
-    static int noOfBookings = 0;
-    int indexNo;
     String name;
     String note;
     LocalTime time;
@@ -15,8 +13,6 @@ public class Booking implements Comparable<Booking> {
     Transaction transaction = new Transaction(0, false);
 
     Booking(String name, String note, LocalDate date, LocalTime time, double amount, boolean paymentReceived) {
-        indexNo = noOfBookings;
-        noOfBookings++;
         this.name = name;
         this.note = note;
         this.time = time;
@@ -26,7 +22,7 @@ public class Booking implements Comparable<Booking> {
     }
 
     public String toString() {
-        return indexNo + ". " + name + " - " + date + " " + time + " - " + note + " - " + transaction.getAmount() + " - " + transaction.getPaymentReceived();
+        return name + " - " + date + " " + time + " - " + note + " - " + transaction.getAmount() + " - " + transaction.getPaymentReceived();
     }
 
     public int compareTo(Booking b) {
