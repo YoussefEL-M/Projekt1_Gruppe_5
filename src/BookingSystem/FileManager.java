@@ -10,11 +10,13 @@ import java.util.ArrayList;
 public class FileManager {
     public static void main (String[] marina) throws IOException {
         ArrayList<Booking> list = getBookings("Bookings");
+        ArrayList<Booking> listTwo = getBookings("PastBookings");
         for(Booking b: list){
             System.out.println(b);
         }
+        list.get(0).transaction.setPaymentReceived(true);
         //list.add(new Booking()));
-        saveBookings(list);
+        saveBookings(list,listTwo);
     }
 
     static ArrayList<Booking> getBookings(String fileName) throws IOException {
