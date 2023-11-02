@@ -22,7 +22,7 @@ public class Booking implements Comparable<Booking> {
     }
 
     public String toString() {
-        return name + " - " + date + " " + time + " - " + note + " - " + transaction.getAmount() + " - " + transaction.getPaymentReceived();
+        return name + " - " + date + " " + time + " - " + note + " - " + transaction.getAmount() + " - " + (transaction.getPaymentReceived()? "Paid" : "Not paid");
     }
 
     public int compareTo(Booking b) {

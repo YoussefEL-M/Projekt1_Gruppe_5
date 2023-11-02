@@ -128,18 +128,27 @@ public class Salon {
                             }
                             case 2 -> {
                                 check = false;
-                                System.out.println();
-                                System.out.println("Enter closed date in format yyyy-mm-dd.");
-                                LocalDate closedDate = LocalDate.parse(scanner.nextLine());
-
-                                for(LocalDate d: closedDates){
-                                    if(d.isEqual(closedDate)){
-                                        closedDates.remove(d);
+                                while (!check) {
+                                    try {
+                                        System.out.println();
+                                        System.out.println("Enter closed date in format yyyy-mm-dd.");
+                                        LocalDate closedDate = LocalDate.parse(scanner.nextLine());
+                                        for(LocalDate d: closedDates){
+                                            if(d.isEqual(closedDate)){
+                                                closedDates.remove(d);
+                                                check = true;
+                                                break;
+                                            }
+                                        }
+                                        System.out.println(check ? "Date successfully removed." : "Error: no such date found.");
                                         check = true;
-                                        break;
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println();
+                                        System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
+                                    } catch (Exception e) {
+                                        System.out.println("An error has occurred " + e.getMessage());
                                     }
                                 }
-                                System.out.println(check ? "Date successfully removed." : "Error: no such date found.");
                             }
                         }
                     }
@@ -151,7 +160,33 @@ public class Salon {
                     String enterPassword = scanner.nextLine();
                     if (enterPassword.equals(financePassword)) {
 
-                        System.out.println(FileManager.getBookings("PastBookings"));
+                        check = false;
+                        ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
+                        LocalDate searchDate = null;
+
+                        while(!check) {
+                            try {
+                                System.out.println();
+                                System.out.println("Enter date to view transactions for in format yyyy-mm-dd.");
+                                searchDate = LocalDate.parse(scanner.nextLine());
+                                check = true;
+                            }catch(DateTimeParseException e) {
+                                System.out.println();
+                                System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
+                            } catch (Exception e) {
+                                System.out.println("An error has occurred " + e.getMessage());
+                            }
+                        }
+                        check = false;
+                        for(Booking b: pastBookings){
+                            if(searchDate.isEqual(b.date)) {
+                                System.out.println(b);
+                                check = true;
+                            }
+                        }
+
+                        if(!check)
+                            System.out.println("Error: No bookings found for the given date.");
 
                     } else {
                         System.out.println();

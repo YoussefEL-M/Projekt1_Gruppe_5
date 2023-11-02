@@ -26,9 +26,16 @@ Section 4: cancelling a booking - menu option 3.
 After selecting menu option '3', the user is prompted to enter the date and time for the booking to be removed. If no such booking is found, the system returns an error, otherwise
 it confirms that the booking is cancelled.
 
-Section 5: adding closed days - menu option 4. - INCOMPLETE
+Section 5: adding and removing closed days - menu option 4.
 
-After selecting menu option '4', the user is prompted to enter the date to mark as closed. Weekends are automatically considered closed by the program. In the event that a closed day
-is mistakenly entered, it can be removed again, although
+After selecting menu option '4', the user whether to add or remove a closed day. Weekends are automatically considered closed by the program.
 
 Section 6: editing transactions - menu option 5.
+
+Section 7:
+
+Section 8: backups and data recovery - menu option 7.
+
+In the event of a power cut or system crash, the most recently entered bookings will not have been correctly saved. However, they can generally be recovered as follows:
+
+THE FIRST TIME the system is powered on after the unexpected shutdown, immediately select menu option '7'.
