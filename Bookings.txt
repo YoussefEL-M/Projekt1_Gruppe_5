@@ -1,7 +1,7 @@
 Miho Benoit-Hatherton,Earcut,2023-11-21,22:41,40.0,true
 Aspen Benoit,Hatcut,2023-11-21,22:42,70.0,true
 Juliet Hatherton,Fangcut,2023-11-21,22:43,50.0,false
-Lena,Wingcut,2023-11-22,11:30,150.0,false
+Lena,Wingcut,2023-11-22,11:30,120.0,true
 Miho Benoit-Hatherton,Earcut,2023-11-22,22:41,40.0,false
 Aspen Benoit,Hatcut,2023-11-22,22:42,40.0,false
 Juliet Hatherton,Fangcut,2023-11-22,22:43,50.0,false

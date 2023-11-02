@@ -322,28 +322,21 @@ public class Salon {
     }
 
     private static void editBooking(ArrayList<Booking> bookings, Scanner scanner) {
-        boolean t = true;
+        boolean check = true;
 
-        while (t) {
+        while (check) {
             try {
                 System.out.println();
-                ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
+                ArrayList<Booking> pastBookings = new ArrayList<>();
+                Booking bookingToEdit = null;
 
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd.");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
-
                 System.out.println("Enter the time of the booking in format hh:mm.");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
-                Booking bookingToEdit = null;
-
-                for (Booking booking : bookings) {
-                    if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
-                        bookingToEdit = booking;
-                        break;
-                    }
-                }
-                if(bookingToEdit==null) {
+                if(searchDate.isBefore(LocalDate.now())) {
+                    pastBookings = FileManager.getBookings("PastBookings");
                     for (Booking booking : pastBookings) {
                         if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
                             bookingToEdit = booking;
@@ -351,7 +344,14 @@ public class Salon {
                         }
                     }
                 }
-
+                if(bookingToEdit==null) {
+                    for (Booking booking : bookings) {
+                        if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
+                            bookingToEdit = booking;
+                            break;
+                        }
+                    }
+                }
 
                 System.out.println();
                 if (bookingToEdit != null) {
@@ -362,28 +362,32 @@ public class Salon {
                     double newAmount = scanner.nextDouble();
                     scanner.nextLine();
 
-                    System.out.println("Was payment received? (yes/no): ");
+                    System.out.println("Was payment received? (y/n): ");
                     String paymentReceivedInput = scanner.nextLine();
-                    boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
+                    boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("y");
 
                     bookingToEdit.transaction.setAmount(newAmount);
                     bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
 
                     System.out.println("Booking edited successfully!");
 
-                    t=false;
-                    FileManager.saveBookings(bookings,pastBookings);
+                    check=false;
+                    if (pastBookings.isEmpty()) {
+                        FileManager.saveBookings(bookings);
+                    } else {
+                        FileManager.saveBookings(bookings, pastBookings);
+                    }
                 } else {
-                    System.out.println("No matching booking found.");
+                    System.out.println("Error: No matching booking found.");
                 }
             }catch (DateTimeParseException e) {
                 System.out.println();
                 System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
-                t = true;
+                check = true;
             } catch (Exception e) {
                 System.out.println("An error has occurred " + e.getMessage());
                 e.printStackTrace();
-                t = true;
+                check = true;
             }
         }
     }

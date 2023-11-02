@@ -1,4 +1,4 @@
-Miho Benoit-Hatherton,Earcut,2022-11-21,22:42,70.0,true
+Miho Benoit-Hatherton,Earcut,2022-11-21,22:42,80.0,false
 Aspen Benoit,Hatcut,2022-11-21,22:42,40.0,false
 Juliet Hatherton,Fangcut,2022-11-21,22:42,50.0,false
 Lena,Wingcut,2022-11-21,22:42,50.0,false
