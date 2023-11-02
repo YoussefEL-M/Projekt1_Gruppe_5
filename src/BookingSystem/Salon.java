@@ -328,7 +328,7 @@ public class Salon {
                     System.out.println("Current booking details:");
                     System.out.println(bookingToEdit);
 
-                    System.out.println("Enter amount to add: ");
+                    System.out.println("Enter new transaction amount: ");
                     double newAmount = scanner.nextDouble();
                     scanner.nextLine();
 
@@ -336,7 +336,7 @@ public class Salon {
                     String paymentReceivedInput = scanner.nextLine();
                     boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("yes");
 
-                    bookingToEdit.transaction.addAmount(newAmount);
+                    bookingToEdit.transaction.setAmount(newAmount);
                     bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
 
                     System.out.println("Booking edited successfully!");

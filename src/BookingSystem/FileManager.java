@@ -33,7 +33,7 @@ public class FileManager {
             LocalDate date = LocalDate.parse(bits[2]);
             LocalTime time = LocalTime.parse(bits[3]);
             double amount = Double.parseDouble(bits[4]);
-            boolean paymentReceived = Boolean.getBoolean(bits[5]);
+            boolean paymentReceived = Boolean.parseBoolean(bits[5]);
 
             list.add(new Booking(name,note,date,time,amount,paymentReceived));
             line = in.readLine();
