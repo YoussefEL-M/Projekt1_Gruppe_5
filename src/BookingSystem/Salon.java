@@ -31,7 +31,7 @@ public class Salon {
             System.out.println("Welcome to Harry's Salon!");
             System.out.println("Hairy?");
             System.out.println("See Cotter!");
-            System.out.println("1. Search times or bookings");
+            System.out.println("1. Search times, bookings, and closed days");
             System.out.println("2. Book appointment");
             System.out.println("3. Cancel appointment");
             System.out.println("4. Add closed date");
@@ -45,11 +45,12 @@ public class Salon {
             scanner.nextLine();
             switch (choice) {
                 case 1 -> {
-                    while (choice!=3) {
+                    while (choice!=4) {
                         System.out.println();
                         System.out.println("1. Show bookings on a specific date");
                         System.out.println("2. Show available times for a specific date and four business days forward");
-                        System.out.println("3. Go back");
+                        System.out.println("3. Show closed days");
+                        System.out.println("4. Go back");
 
                         choice = scanner.nextInt();
                         scanner.nextLine();
@@ -66,7 +67,14 @@ public class Salon {
                                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
                                 searchTimes(bookings,searchDate,availableTimes,closedDates);
                             }
-                            case 3 -> System.out.println("Returning to main menu");
+                            case 3 -> {
+                                System.out.println();
+                                closedDates.sort(null);
+                                for(LocalDate d: closedDates){
+                                    System.out.println(d);
+                                }
+                            }
+                            case 4 -> System.out.println("Returning to main menu");
                             default -> System.out.println("Error. Invalid input. Try again");
                         }
                     }
