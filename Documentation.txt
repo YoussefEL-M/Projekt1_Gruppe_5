@@ -1,0 +1,34 @@
+Thank you for purchasing the SuperBook© Booking System! Please read the instructions below thoroughly before using the system, as it contains important information.
+For a brief overview, reading section 8 is highly recommended, as incorrect usage of data recovery features may lead to irreversible data loss.
+
+Section 1: general use.
+
+The SuperBook© system uses a simple terminal interface. Simply type the number matching the desired menu option and press 'enter'. In the event that an invalid input is entered,
+the system will return an error message and return to the start page for the current menu.
+
+Section 2: search and display functions - menu option 1.
+
+Entering '1' in the main menu will open a sub-menu where the user can select one of three features, as well as return to the main menu. The first option allows the user to view
+all logged bookings on a specific date, which must be entered in the format yyyy-mm-dd, e.g. 2022-11-21 for November 21st 2022.
+
+The second option allows the user to enter a date and be shown all available times on that day and the next four business days. Note that the system shows times in intervals of
+half and hour, meaning that while an appointment can be booked for 11:29, the system will still consider 11:30 to be a valid time to book another appointment.
+
+The third option simply displays a list of all future days the salon has been designated as closed (see Section 5).
+
+Section 3: booking appointments - menu option 2.
+
+After selecting menu option '2', the user is prompted to enter the name of the customer, the desired date and time, and a note of the type of appointment. The system notifies
+the user if the desired time and date is not available and returns to the main menu. Once a booking is successfully entered, the system confirms that the booking is created.
+
+Section 4: cancelling a booking - menu option 3.
+
+After selecting menu option '3', the user is prompted to enter the date and time for the booking to be removed. If no such booking is found, the system returns an error, otherwise
+it confirms that the booking is cancelled.
+
+Section 5: adding closed days - menu option 4. - INCOMPLETE
+
+After selecting menu option '4', the user is prompted to enter the date to mark as closed. Weekends are automatically considered closed by the program. In the event that a closed day
+is mistakenly entered, it can be removed again, although
+
+Section 6: editing transactions - menu option 5.
