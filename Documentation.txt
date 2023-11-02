@@ -1,5 +1,7 @@
 Thank you for purchasing the SuperBook© Booking System! Please read the instructions below thoroughly before using the system, as it contains important information.
-For a brief overview, reading section 8 is highly recommended, as incorrect usage of data recovery features may lead to irreversible data loss.
+
+IMPORTANT: Always close the program through the main menu (option '8') at the end of the business day. Do not shut down the system while the program is running, or data loss may occur.
+See Section 8 of this document for details on data recovery in the event of an unexpected shutdown due to a power cut or system crash.
 
 Section 1: general use.
 
@@ -12,7 +14,7 @@ Entering '1' in the main menu will open a sub-menu where the user can select one
 all logged bookings on a specific date, which must be entered in the format yyyy-mm-dd, e.g. 2022-11-21 for November 21st 2022.
 
 The second option allows the user to enter a date and be shown all available times on that day and the next four business days. Note that the system shows times in intervals of
-half and hour, meaning that while an appointment can be booked for 11:29, the system will still consider 11:30 to be a valid time to book another appointment.
+half an hour, meaning that while an appointment can be booked for 11:29, the system will then still consider 11:30 to be a valid time to book another appointment.
 
 The third option simply displays a list of all future days the salon has been designated as closed (see Section 5).
 
@@ -28,11 +30,16 @@ it confirms that the booking is cancelled.
 
 Section 5: adding and removing closed days - menu option 4.
 
-After selecting menu option '4', the user whether to add or remove a closed day. Weekends are automatically considered closed by the program.
+After selecting menu option '4', the user is prompted to choose whether to add or remove a closed day. Weekends are automatically considered closed by the program.
 
 Section 6: editing transactions - menu option 5.
 
-Section 7:
+After selecting menu option '5', the user is asked to enter the date and time of the booking to be edited. At this point, the user can update the transaction amount, as well as
+declare whether or not payment was received.
+
+Section 7: Viewing finances - menu option 6.
+
+After selecting menu option '6', the user must enter the admin password in order to proceed. After this, the user is prompted to enter the desired date to display transactions for.
 
 Section 8: backups and data recovery - menu option 7.
 

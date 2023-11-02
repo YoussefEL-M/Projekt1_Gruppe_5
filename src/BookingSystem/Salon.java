@@ -75,7 +75,7 @@ public class Salon {
                                     System.out.println(d);
                                 }
                             }
-                            case 4 -> System.out.println("Returning to main menu.");
+                            case 4 -> System.out.println("Returning to the main menu.");
                             default -> System.out.println("Error: Invalid input. Try again.");
                         }
                     }
@@ -150,6 +150,8 @@ public class Salon {
                                     }
                                 }
                             }
+                            case 3 -> System.out.println("Returning to the main menu.");
+                            default -> System.out.println("Error: Invalid input. Try again.");
                         }
                     }
                 }
