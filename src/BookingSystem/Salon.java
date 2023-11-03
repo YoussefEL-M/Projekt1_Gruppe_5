@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Salon {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] ohMyGodDidTheyGiveYouAnEarcutToo) throws IOException {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = FileManager.getClosedDays();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
