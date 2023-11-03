@@ -29,9 +29,10 @@ public class Salon {
             availableTimes.add(LocalTime.of(hour, 30));
         }
         Scanner scanner = new Scanner(System.in);
-        int choice;
+        int choice = 0;
 
         do {
+            try {
             System.out.println();
             System.out.println("Welcome to Harry's Salon!");
             System.out.println("Hairy?");
@@ -48,190 +49,195 @@ public class Salon {
 
             choice = scanner.nextInt();
             scanner.nextLine();
-            switch (choice) {
-                case 1 -> {
-                    while (choice!=4) {
-                        System.out.println();
-                        System.out.println("1. Show bookings on a specific date");
-                        System.out.println("2. Show available times for a specific date and four business days forward");
-                        System.out.println("3. Show closed days");
-                        System.out.println("4. Return to the main menu");
 
-                        choice = scanner.nextInt();
-                        scanner.nextLine();
-                        switch (choice) {
-                            case 1 -> {
-                                try {
-                                    System.out.println();
-                                    System.out.println("Enter date in format yyyy-mm-dd.");
-                                    LocalDate searchDate = LocalDate.parse(scanner.nextLine());
-                                    showBookings(bookings, closedDates, searchDate);
-                                }catch (DateTimeParseException e){
-                                    System.out.println();
-                                    System.out.println("Date/Time format is invalid.");
-                                }catch (Exception e){
-                                    System.out.println("An error has occured! "+e.getMessage());
-                                }
-                            }
-                            case 2 -> {
-                                try {
-                                    System.out.println();
-                                    System.out.println("Enter date in format yyyy-mm-dd.");
-                                    LocalDate searchDate = LocalDate.parse(scanner.nextLine());
-                                    searchTimes(bookings, searchDate, availableTimes, closedDates);
-                                }catch (DateTimeParseException e){
-                                    System.out.println();
-                                    System.out.println("Date/Time format is invalid.");
-                                }catch (Exception e){
-                                    System.out.println("An error has occured! "+e.getMessage());
-                                }
-                            }
-                            case 3 -> {
-                                System.out.println();
-                                closedDates.sort(null);
-                                for(LocalDate d: closedDates){
-                                    System.out.println(d);
-                                }
-                            }
-                            case 4 -> System.out.println("Returning to the main menu.");
-                            default -> System.out.println("Error: Invalid input. Try again.");
-                        }
-                    }
-                }
-                case 2 -> {
-                    Booking newBook = getBookingDetails(scanner);
+                switch (choice) {
+                    case 1 -> {
+                        while (choice != 4) {
+                            System.out.println();
+                            System.out.println("1. Show bookings on a specific date");
+                            System.out.println("2. Show available times for a specific date and four business days forward");
+                            System.out.println("3. Show closed days");
+                            System.out.println("4. Return to the main menu");
 
-                    if (isAvailable(newBook.getDate(), newBook.getTime(), closedDates, availableTimes, bookings)) {
-                        bookings.add(newBook);
-                        backup.add(newBook);
-                        FileManager.backupBookings(backup);
-                        System.out.println();
-                        System.out.println("Booking created for " + newBook.name + " on " + newBook.getDate() + " at " + newBook.getTime() + ".");
-                    } else {
-                        System.out.println();
-                        System.out.println("The selected time is unavailable. Please choose another time.");
-                    }
-                }
-                case 3 -> cancelBooking(bookings, scanner);
-                case 4 -> {
-                    while (choice != 3) {
-
-                        System.out.println();
-                        System.out.println("1. Add a new closed day");
-                        System.out.println("2. Remove a closed day");
-                        System.out.println("3. Return to the main menu");
-
-                        choice = scanner.nextInt();
-                        scanner.nextLine();
-
-                        switch (choice) {
-                            case 1 -> {
-                                check = true;
-                                while (check) {
+                            choice = scanner.nextInt();
+                            scanner.nextLine();
+                            switch (choice) {
+                                case 1 -> {
                                     try {
                                         System.out.println();
-                                        System.out.println("Enter closed date in format yyyy-mm-dd.");
-                                        LocalDate closedDate = LocalDate.parse(scanner.nextLine());
-                                        closedDates.add(closedDate);
-                                        FileManager.saveClosedDays(closedDates);
-                                        System.out.println("Closed date added: " + closedDate);
-                                        check = false;
+                                        System.out.println("Enter date in format yyyy-mm-dd.");
+                                        LocalDate searchDate = LocalDate.parse(scanner.nextLine());
+                                        showBookings(bookings, closedDates, searchDate);
                                     } catch (DateTimeParseException e) {
                                         System.out.println();
-                                        System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
+                                        System.out.println("Date/Time format is invalid.");
                                     } catch (Exception e) {
-                                        System.out.println("An error has occurred " + e.getMessage());
+                                        System.out.println("An error has occured! " + e.getMessage());
                                     }
                                 }
-                            }
-                            case 2 -> {
-                                check = false;
-                                while (!check) {
+                                case 2 -> {
                                     try {
                                         System.out.println();
-                                        System.out.println("Enter closed date in format yyyy-mm-dd.");
-                                        LocalDate closedDate = LocalDate.parse(scanner.nextLine());
-                                        for(LocalDate d: closedDates){
-                                            if(d.isEqual(closedDate)){
-                                                closedDates.remove(d);
-                                                check = true;
-                                                break;
-                                            }
+                                        System.out.println("Enter date in format yyyy-mm-dd.");
+                                        LocalDate searchDate = LocalDate.parse(scanner.nextLine());
+                                        searchTimes(bookings, searchDate, availableTimes, closedDates);
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println();
+                                        System.out.println("Date/Time format is invalid.");
+                                    } catch (Exception e) {
+                                        System.out.println("An error has occured! " + e.getMessage());
+                                    }
+                                }
+                                case 3 -> {
+                                    System.out.println();
+                                    closedDates.sort(null);
+                                    for (LocalDate d : closedDates) {
+                                        System.out.println(d);
+                                    }
+                                }
+                                case 4 -> System.out.println("Returning to the main menu.");
+                                default -> System.out.println("Error: Invalid input. Try again.");
+                            }
+                        }
+                    }
+                    case 2 -> {
+                        Booking newBook = getBookingDetails(scanner);
+
+                        if (isAvailable(newBook.getDate(), newBook.getTime(), closedDates, availableTimes, bookings)) {
+                            bookings.add(newBook);
+                            backup.add(newBook);
+                            FileManager.backupBookings(backup);
+                            System.out.println();
+                            System.out.println("Booking created for " + newBook.name + " on " + newBook.getDate() + " at " + newBook.getTime() + ".");
+                        } else {
+                            System.out.println();
+                            System.out.println("The selected time is unavailable. Please choose another time.");
+                        }
+                    }
+                    case 3 -> cancelBooking(bookings, scanner);
+                    case 4 -> {
+                        while (choice != 3) {
+
+                            System.out.println();
+                            System.out.println("1. Add a new closed day");
+                            System.out.println("2. Remove a closed day");
+                            System.out.println("3. Return to the main menu");
+
+                            choice = scanner.nextInt();
+                            scanner.nextLine();
+
+                            switch (choice) {
+                                case 1 -> {
+                                    check = true;
+                                    while (check) {
+                                        try {
+                                            System.out.println();
+                                            System.out.println("Enter closed date in format yyyy-mm-dd.");
+                                            LocalDate closedDate = LocalDate.parse(scanner.nextLine());
+                                            closedDates.add(closedDate);
+                                            FileManager.saveClosedDays(closedDates);
+                                            System.out.println("Closed date added: " + closedDate);
+                                            check = false;
+                                        } catch (DateTimeParseException e) {
+                                            System.out.println();
+                                            System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
+                                        } catch (Exception e) {
+                                            System.out.println("An error has occurred " + e.getMessage());
                                         }
-                                        System.out.println(check ? "Date successfully removed." : "Error: no such date found.");
-                                        check = true;
-                                    } catch (DateTimeParseException e) {
-                                        System.out.println();
-                                        System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
-                                    } catch (Exception e) {
-                                        System.out.println("An error has occurred " + e.getMessage());
                                     }
                                 }
+                                case 2 -> {
+                                    check = false;
+                                    while (!check) {
+                                        try {
+                                            System.out.println();
+                                            System.out.println("Enter closed date in format yyyy-mm-dd.");
+                                            LocalDate closedDate = LocalDate.parse(scanner.nextLine());
+                                            for (LocalDate d : closedDates) {
+                                                if (d.isEqual(closedDate)) {
+                                                    closedDates.remove(d);
+                                                    check = true;
+                                                    break;
+                                                }
+                                            }
+                                            System.out.println(check ? "Date successfully removed." : "Error: no such date found.");
+                                            check = true;
+                                        } catch (DateTimeParseException e) {
+                                            System.out.println();
+                                            System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
+                                        } catch (Exception e) {
+                                            System.out.println("An error has occurred " + e.getMessage());
+                                        }
+                                    }
+                                }
+                                case 3 -> System.out.println("Returning to the main menu.");
+                                default -> System.out.println("Error: Invalid input. Try again.");
                             }
-                            case 3 -> System.out.println("Returning to the main menu.");
-                            default -> System.out.println("Error: Invalid input. Try again.");
                         }
                     }
-                }
-                case 5 -> editBooking(bookings, scanner);
-                case 6 -> {
-                    System.out.println();
-                    System.out.println("Please enter the password: ");
-                    String enterPassword = scanner.nextLine();
-                    if (enterPassword.equals(financePassword)) {
-
-                        check = false;
-                        ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
-                        LocalDate searchDate = null;
-
-                        while(!check) {
-                            try {
-                                System.out.println();
-                                System.out.println("Enter date to view transactions for in format yyyy-mm-dd.");
-                                searchDate = LocalDate.parse(scanner.nextLine());
-                                check = true;
-                            }catch(DateTimeParseException e) {
-                                System.out.println();
-                                System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
-                            } catch (Exception e) {
-                                System.out.println("An error has occurred " + e.getMessage());
-                            }
-                        }
-                        check = false;
-                        for(Booking b: pastBookings){
-                            if(searchDate.isEqual(b.date)) {
-                                System.out.println(b);
-                                check = true;
-                            }
-                        }
-
-                        if(!check)
-                            System.out.println("Error: No bookings found for the given date.");
-
-                    } else {
+                    case 5 -> editBooking(bookings, scanner);
+                    case 6 -> {
                         System.out.println();
-                        System.out.println("Incorrect password. Please try again ");
+                        System.out.println("Please enter the password: ");
+                        String enterPassword = scanner.nextLine();
+                        if (enterPassword.equals(financePassword)) {
+
+                            check = false;
+                            ArrayList<Booking> pastBookings = FileManager.getBookings("PastBookings");
+                            LocalDate searchDate = null;
+
+                            while (!check) {
+                                try {
+                                    System.out.println();
+                                    System.out.println("Enter date to view transactions for in format yyyy-mm-dd.");
+                                    searchDate = LocalDate.parse(scanner.nextLine());
+                                    check = true;
+                                } catch (DateTimeParseException e) {
+                                    System.out.println();
+                                    System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
+                                } catch (Exception e) {
+                                    System.out.println("An error has occurred " + e.getMessage());
+                                }
+                            }
+                            check = false;
+                            for (Booking b : pastBookings) {
+                                if (searchDate.isEqual(b.date)) {
+                                    System.out.println(b);
+                                    check = true;
+                                }
+                            }
+
+                            if (!check)
+                                System.out.println("Error: No bookings found for the given date.");
+
+                        } else {
+                            System.out.println();
+                            System.out.println("Incorrect password. Please try again ");
+                        }
                     }
-                }
-                case 7 -> {
-                    try {
-                        ArrayList<Booking> backupData = FileManager.getBookings("Backup");
-                        bookings.addAll(backupData);
+                    case 7 -> {
+                        try {
+                            ArrayList<Booking> backupData = FileManager.getBookings("Backup");
+                            bookings.addAll(backupData);
+                            System.out.println();
+                            System.out.println(backupData.isEmpty() ? "Error: No data to recover." : "Data successfully recovered.");
+                        } catch (IOException e) {
+                            System.out.println("Error: Failed to read recovery data.");
+                        }
+                    }
+                    case 8 -> {
+                        FileManager.saveBookings(bookings);
+                        FileManager.saveClosedDays(closedDates);
+                        FileManager.backupBookings(new ArrayList<>()); // Clears the backups file after successfully saving.
                         System.out.println();
-                        System.out.println(backupData.isEmpty() ? "Error: No data to recover." : "Data successfully recovered.");
-                    } catch (IOException e){
-                        System.out.println("Error: Failed to read recovery data.");
+                        System.out.println("Thanks for using our salon booking system. Goodbye!");
                     }
+                    default -> System.out.println("Error. Invalid input. Try again");
                 }
-                case 8 -> {
-                    FileManager.saveBookings(bookings);
-                    FileManager.saveClosedDays(closedDates);
-                    FileManager.backupBookings(new ArrayList<>()); // Clears the backups file after successfully saving.
-                    System.out.println();
-                    System.out.println("Thanks for using our salon booking system. Goodbye!");
-                }
-                default -> System.out.println("Error. Invalid input. Try again");
-            } //switch
+            }catch (Exception e) {
+                System.out.println("An error has occurred " + e.getMessage());
+                scanner.nextLine();
+            }
         } while (choice != 8);
         scanner.close();
     }
