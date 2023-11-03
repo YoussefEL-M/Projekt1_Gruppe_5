@@ -15,9 +15,14 @@ public class Salon {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = FileManager.getClosedDays();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
+        // saveBookings is called here to sort bookings from yesterday into PastBookings.txt
         FileManager.saveBookings(bookings);
         ArrayList<Booking> backup = new ArrayList<>();
+        // check is used as a universal boolean for various loops.
         boolean check;
+        String financePassword = "hairyharry";
+
+        // Creates the list of available times which searchTimes() checks against. Could probably be cleaned up.
 
         for (int hour = 10; hour < 18; hour++) {
             availableTimes.add(LocalTime.of(hour, 0));
@@ -25,8 +30,6 @@ public class Salon {
         }
         Scanner scanner = new Scanner(System.in);
         int choice;
-
-        String financePassword = "hairyharry";
 
         do {
             System.out.println();
