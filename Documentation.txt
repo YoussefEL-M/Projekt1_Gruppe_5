@@ -13,8 +13,7 @@ Section 2: search and display functions - menu option 1.
 Entering '1' in the main menu will open a sub-menu where the user can select one of three features, as well as return to the main menu. The first option allows the user to view
 all logged bookings on a specific date, which must be entered in the format yyyy-mm-dd, e.g. 2022-11-21 for November 21st 2022.
 
-The second option allows the user to enter a date and be shown all available times on that day and the next four business days. Note that the system shows times in intervals of
-half an hour, meaning that while an appointment can be booked for 11:29, the system will then still consider 11:30 to be a valid time to book another appointment.
+The second option allows the user to enter a date and be shown all available times on that day and the next four business days.
 
 The third option simply displays a list of all future days the salon has been designated as closed (see Section 5).
 
@@ -22,6 +21,8 @@ Section 3: booking appointments - menu option 2.
 
 After selecting menu option '2', the user is prompted to enter the name of the customer, the desired date and time, and a note of the type of appointment. The system notifies
 the user if the desired time and date is not available and returns to the main menu. Once a booking is successfully entered, the system confirms that the booking is created.
+
+Note that only times on the hour and half hour, e.g. 11:00, 11:30, 12:00, etc., are valid.
 
 Section 4: cancelling a booking - menu option 3.
 
