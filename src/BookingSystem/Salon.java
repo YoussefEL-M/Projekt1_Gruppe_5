@@ -281,11 +281,16 @@ public class Salon {
                 System.out.println();
                 System.out.println("Error: The salon is not open for business on this day.");
             } else {
+
+                // Loop runs for selected date and four business days into the future.
+
                 for (int i = 1; i <= 5; ) {
                     if (searchDate.getDayOfWeek() == DayOfWeek.SATURDAY || searchDate.getDayOfWeek() == DayOfWeek.SUNDAY || closedDates.contains(searchDate)) {
                         searchDate = searchDate.plusDays(1);
                         continue;
                     }
+
+                    // Bookings with matching dates are added to a new ArrayList in order to improve runtime when checking against times.
 
                     ArrayList<Booking> matchingDate = new ArrayList<>();
                     boolean check;
@@ -298,6 +303,10 @@ public class Salon {
                     System.out.println();
                     System.out.println("Available times for " + searchDate + ":");
                     System.out.println();
+
+                    // For each time, checks each booking on the matching date to see if any times match.
+                    // If not, prints the time as available.
+                    // I figure there's probably a better way to do this.
 
                     for (LocalTime t : times) {
                         check = false;
@@ -452,6 +461,8 @@ public class Salon {
                         check = true;
                     }
                 }
+
+                // Sorts the list by booking time so that they display in order.
 
                 sortedList.sort(null);
                 System.out.println();
