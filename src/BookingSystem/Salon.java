@@ -92,7 +92,7 @@ public class Salon {
                         backup.add(newBook);
                         FileManager.backupBookings(backup);
                         System.out.println();
-                        System.out.println("Booking created for " + " on " + newBook.getDate() + " at time " + newBook.getTime() + " O'Clock.");
+                        System.out.println("Booking created for " + newBook.name+ " on " + newBook.getDate() + " at time " + newBook.getTime() + " O'Clock.");
                     } else {
                         System.out.println();
                         System.out.println("The selected time is unavailable. Please choose another time.");
@@ -254,25 +254,29 @@ public class Salon {
 
     private static boolean isAvailable(LocalDate date, LocalTime time, ArrayList<LocalDate> closedDates, ArrayList<LocalTime> availableTimes, ArrayList<Booking> bookings) {
         if (date.getDayOfWeek() == DayOfWeek.SATURDAY || date.getDayOfWeek() == DayOfWeek.SUNDAY) {
-            // It's Saturday or Sunday
+            // If Date is a Saturday or Sunday, the value is returned false.
             System.out.println();
             System.out.println("Error: date is on a weekend.");
             return false;
         }
 
+        if (closedDates.contains(date)) {
+            // If the date is part of the list closedDates, value returns false.
+            System.out.println();
+            System.out.println("Error: the salon is closed on this day.");
+            return false;
+        }
+
         for (Booking booking : bookings) {
             if (booking.getDate().equals(date) && booking.getTime().equals(time)) {
-                // Booking already exists
+                // Loop runs through bookings and if a booking matches the date and time, the value returns false.
                 System.out.println();
                 System.out.println("Error: a booking already exists at this time.");
                 return false;
             }
         }
-        if (closedDates.contains(date)) {
-            System.out.println();
-            System.out.println("Error: the salon is closed on this day.");
-        }
-        return !closedDates.contains(date) && availableTimes.contains(time);
+
+        return availableTimes.contains(time);
     }  //isAvailable
 
     static void searchTimes(ArrayList<Booking> list, LocalDate searchDate, ArrayList<LocalTime> times, ArrayList<LocalDate> closedDates) { //Severin - 26/10
