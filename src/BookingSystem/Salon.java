@@ -212,7 +212,7 @@ public class Salon {
                 case 8 -> {
                     FileManager.saveBookings(bookings);
                     FileManager.saveClosedDays(closedDates);
-                    FileManager.backupBookings(new ArrayList<>());
+                    FileManager.backupBookings(new ArrayList<>()); // Clears the backups file after successfully saving.
                     System.out.println();
                     System.out.println("Thanks for using our salon booking system. Goodbye!");
                 }
