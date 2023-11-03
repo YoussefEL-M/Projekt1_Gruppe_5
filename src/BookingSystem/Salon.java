@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Salon {
@@ -72,7 +73,7 @@ public class Salon {
                                         System.out.println();
                                         System.out.println("Date/Time format is invalid.");
                                     } catch (Exception e) {
-                                        System.out.println("An error has occured! " + e.getMessage());
+                                        System.out.println("An error has occurred: " + e.getMessage());
                                     }
                                 }
                                 case 2 -> {
@@ -85,7 +86,7 @@ public class Salon {
                                         System.out.println();
                                         System.out.println("Date/Time format is invalid.");
                                     } catch (Exception e) {
-                                        System.out.println("An error has occured! " + e.getMessage());
+                                        System.out.println("An error has occurred: " + e.getMessage());
                                     }
                                 }
                                 case 3 -> {
@@ -232,10 +233,10 @@ public class Salon {
                         System.out.println();
                         System.out.println("Thanks for using our salon booking system. Goodbye!");
                     }
-                    default -> System.out.println("Error. Invalid input. Try again");
+                    default -> System.out.println("Error. Invalid input. Try again.");
                 }
-            }catch (Exception e) {
-                System.out.println("An error has occurred " + e.getMessage());
+            }catch (InputMismatchException e) {
+                System.out.println("Error: Invalid input. Try again.");
                 scanner.nextLine();
             }
         } while (choice != 8);
@@ -354,9 +355,7 @@ public class Salon {
     }//searchTimes
 
     private static void cancelBooking(ArrayList<Booking> bookings, Scanner scanner) {
-        boolean t = true;
 
-        while (t) {
             try {
                 System.out.println();
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd.");
@@ -372,7 +371,6 @@ public class Salon {
                         bookingToRemove = booking;
                         System.out.println();
                         System.out.println("Booking successfully cancelled.");
-                        t = false;
                         break;
                     }
                 }
@@ -386,13 +384,10 @@ public class Salon {
             }catch (DateTimeParseException e) {
                 System.out.println();
                 System.out.println("Date/Time format is invalid.");
-                t = true;
             } catch (Exception e) {
                 System.out.println("An error has occurred " + e.getMessage());
                 e.printStackTrace();
-                t = true;
             }
-        }
     }
 
     private static void editBooking(ArrayList<Booking> bookings, Scanner scanner) {

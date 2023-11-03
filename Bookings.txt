@@ -4,3 +4,4 @@ Juliet Hatherton,Fangcut,2023-11-21,22:42,50.0,false
 Lena,Wingcut,2023-11-21,22:42,50.0,false
 Test,Test,2023-11-03,12:00,30.0,false
 Test,Test,2023-11-04,12:00,30.0,false
+John,Test,2023-11-06,12:30,0.0,false
