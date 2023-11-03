@@ -61,16 +61,30 @@ public class Salon {
                         scanner.nextLine();
                         switch (choice) {
                             case 1 -> {
-                                System.out.println();
-                                System.out.println("Enter date in format yyyy-mm-dd.");
-                                LocalDate searchDate = LocalDate.parse(scanner.nextLine());
-                                showBookings(bookings,closedDates,searchDate);
+                                try {
+                                    System.out.println();
+                                    System.out.println("Enter date in format yyyy-mm-dd.");
+                                    LocalDate searchDate = LocalDate.parse(scanner.nextLine());
+                                    showBookings(bookings, closedDates, searchDate);
+                                }catch (DateTimeParseException e){
+                                    System.out.println();
+                                    System.out.println("Date/Time format is invalid.");
+                                }catch (Exception e){
+                                    System.out.println("An error has occured! "+e.getMessage());
+                                }
                             }
                             case 2 -> {
-                                System.out.println();
-                                System.out.println("Enter date in format yyyy-mm-dd.");
-                                LocalDate searchDate = LocalDate.parse(scanner.nextLine());
-                                searchTimes(bookings,searchDate,availableTimes,closedDates);
+                                try {
+                                    System.out.println();
+                                    System.out.println("Enter date in format yyyy-mm-dd.");
+                                    LocalDate searchDate = LocalDate.parse(scanner.nextLine());
+                                    searchTimes(bookings, searchDate, availableTimes, closedDates);
+                                }catch (DateTimeParseException e){
+                                    System.out.println();
+                                    System.out.println("Date/Time format is invalid.");
+                                }catch (Exception e){
+                                    System.out.println("An error has occured! "+e.getMessage());
+                                }
                             }
                             case 3 -> {
                                 System.out.println();
