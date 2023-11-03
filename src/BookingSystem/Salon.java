@@ -92,7 +92,7 @@ public class Salon {
                         backup.add(newBook);
                         FileManager.backupBookings(backup);
                         System.out.println();
-                        System.out.println("Booking created for " + " on " + newBook.getDate() + " at time " + newBook.getTime() + " O'Clock.");
+                        System.out.println("Booking created for " + newBook.name + " on " + newBook.getDate() + " at " + newBook.getTime() + ".");
                     } else {
                         System.out.println();
                         System.out.println("The selected time is unavailable. Please choose another time.");
