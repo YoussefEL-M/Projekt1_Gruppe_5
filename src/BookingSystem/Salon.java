@@ -380,16 +380,19 @@ public class Salon {
                 ArrayList<Booking> pastBookings = new ArrayList<>();
                 Booking bookingToEdit = null;
 
+                // Prompt user to enter date and time for searching.
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd.");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
                 System.out.println("Enter the time of the booking in format hh:mm.");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
+                // If the search date is in the past, retrieve past bookings.
                 if(searchDate.isBefore(LocalDate.now())) {
                     pastBookings = FileManager.getBookings("PastBookings");
+                    // Iterate through past bookings to find a matching booking.
                     for (Booking booking : pastBookings) {
                         if (booking.getDate().equals(searchDate) && booking.getTime().equals(searchTime)) {
-                            bookingToEdit = booking;
+                            bookingToEdit = booking; // Assign the found booking to bookingToEdit.
                             break;
                         }
                     }
@@ -404,24 +407,27 @@ public class Salon {
                 }
 
                 System.out.println();
-                if (bookingToEdit != null) {
+                if (bookingToEdit != null) { // If a booking was found.
                     System.out.println("Current booking details:");
                     System.out.println(bookingToEdit);
 
                     System.out.println("Enter new transaction amount: ");
-                    double newAmount = scanner.nextDouble();
+                    double newAmount = scanner.nextDouble(); // Prompt for a new transaction amount.
                     scanner.nextLine();
 
                     System.out.println("Was payment received? (y/n): ");
-                    String paymentReceivedInput = scanner.nextLine();
+                    String paymentReceivedInput = scanner.nextLine();// Prompt for payment received.
                     boolean newPaymentReceived = paymentReceivedInput.equalsIgnoreCase("y");
 
+                    // Update the transaction details of the booking.
                     bookingToEdit.transaction.setAmount(newAmount);
                     bookingToEdit.transaction.setPaymentReceived(newPaymentReceived);
 
                     System.out.println("Booking edited successfully!");
 
-                    check=false;
+                    check=false; // Exit the while loop.
+
+                    // Save the updated bookings to the appropriate file.
                     if (pastBookings.isEmpty()) {
                         FileManager.saveBookings(bookings);
                     } else {
@@ -433,11 +439,11 @@ public class Salon {
             }catch (DateTimeParseException e) {
                 System.out.println();
                 System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
-                check = true;
+                check = true; // Continue the while loop.
             } catch (Exception e) {
                 System.out.println("An error has occurred " + e.getMessage());
                 e.printStackTrace();
-                check = true;
+                check = true; // Continue the while loop.
             }
         }
     }
