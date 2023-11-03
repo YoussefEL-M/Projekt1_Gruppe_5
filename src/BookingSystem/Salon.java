@@ -138,7 +138,7 @@ public class Salon {
                                         check = false;
                                     } catch (DateTimeParseException e) {
                                         System.out.println();
-                                        System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
+                                        System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
                                     } catch (Exception e) {
                                         System.out.println("An error has occurred " + e.getMessage());
                                     }
@@ -162,7 +162,7 @@ public class Salon {
                                         check = true;
                                     } catch (DateTimeParseException e) {
                                         System.out.println();
-                                        System.out.println("Date/Time format is invalid. Please use the following format: yyyy-mm-dd and hh:mm.");
+                                        System.out.println("Date format is invalid. Please use the following format: yyyy-mm-dd.");
                                     } catch (Exception e) {
                                         System.out.println("An error has occurred " + e.getMessage());
                                     }
@@ -248,7 +248,7 @@ public class Salon {
                 LocalTime time;
                 System.out.println("Enter booking date in format yyyy-mm-dd.");
                 date = LocalDate.parse(scanner.nextLine());
-                System.out.println("Enter booking time in format hh:mm.");
+                System.out.println("Enter booking time (on the hour or half hour) in format hh:mm.");
                 time = LocalTime.parse(scanner.nextLine());
                 System.out.println("Enter note: ");
                 String note = scanner.nextLine();
@@ -356,7 +356,7 @@ public class Salon {
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd.");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
 
-                System.out.println("Enter the time of the booking in format hh:mm.");
+                System.out.println("Enter the time of the booking (on the hour or half hour) in format hh:mm.");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
                 Booking bookingToRemove = null;
@@ -401,7 +401,7 @@ public class Salon {
                 // Prompt user to enter date and time for searching.
                 System.out.println("Enter the date of the booking in format yyyy-mm-dd.");
                 LocalDate searchDate = LocalDate.parse(scanner.nextLine());
-                System.out.println("Enter the time of the booking in format hh:mm.");
+                System.out.println("Enter the time of the booking (on the hour or half hour) in format hh:mm.");
                 LocalTime searchTime = LocalTime.parse(scanner.nextLine());
 
                 // If the search date is in the past, retrieve past bookings.
