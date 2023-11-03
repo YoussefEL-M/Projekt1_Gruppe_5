@@ -35,7 +35,7 @@ After selecting menu option '4', the user is prompted to choose whether to add o
 Section 6: editing transactions - menu option 5.
 
 After selecting menu option '5', the user is asked to enter the date and time of the booking to be edited. At this point, the user can update the transaction amount, as well as
-declare whether or not payment was received.
+declare whether payment was received.
 
 Section 7: Viewing finances - menu option 6.
 

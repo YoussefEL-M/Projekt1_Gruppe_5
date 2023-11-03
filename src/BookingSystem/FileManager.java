@@ -43,25 +43,24 @@ public class FileManager {
     } //getBookings
 
     static void saveBookings(ArrayList<Booking> list) throws IOException {
-        ArrayList<Booking> secondList = getBookings("PastBookings");
-
-        FileWriter file = new FileWriter("Bookings.txt");
-        FileWriter secondFile = new FileWriter("PastBookings.txt");
+       FileWriter file = new FileWriter("Bookings.txt");
+        FileWriter secondFile = new FileWriter("PastBookings.txt",true);
         PrintWriter out = new PrintWriter(file);
-        PrintWriter secondOut = new PrintWriter(secondFile);
+        BufferedWriter secondOut = new BufferedWriter(secondFile);
+        ArrayList<Booking> toRemove = new ArrayList<>();
 
-        for(Booking b: secondList){
-            secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
-        }
-
-        for(Booking b: list){
+            for(Booking b: list){
             if(b.date.isBefore(LocalDate.now())){
-                secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+                secondOut.write(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+                secondOut.newLine();
+                toRemove.add(b);
             }
             else{
                 out.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
             }
         } //for
+        list.removeAll(toRemove);
+        secondOut.close();
         file.close();
         secondFile.close();
     } //saveBookings
@@ -71,6 +70,7 @@ public class FileManager {
         FileWriter secondFile = new FileWriter("PastBookings.txt");
         PrintWriter out = new PrintWriter(file);
         PrintWriter secondOut = new PrintWriter(secondFile);
+        ArrayList<Booking> toRemove = new ArrayList<>();
 
         for(Booking b: pastList){
             secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
@@ -79,11 +79,13 @@ public class FileManager {
         for(Booking b: list){
             if(b.date.isBefore(LocalDate.now())){
                 secondOut.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
+                toRemove.add(b);
             }
             else{
                 out.println(b.name+","+b.note+","+b.date+","+b.time+","+b.transaction.getAmount()+","+b.transaction.getPaymentReceived());
             }
         } //for
+        list.removeAll(toRemove);
         file.close();
         secondFile.close();
     } //saveBookings

@@ -15,6 +15,7 @@ public class Salon {
         ArrayList<LocalTime> availableTimes = new ArrayList<>();
         ArrayList<LocalDate> closedDates = FileManager.getClosedDays();
         ArrayList<Booking> bookings = FileManager.getBookings("Bookings");
+        FileManager.saveBookings(bookings);
         ArrayList<Booking> backup = new ArrayList<>();
         boolean check;
 
